@@ -4,7 +4,6 @@ require 'includes/db-inc.php';
 include "includes/header.php";
 
 if(isset($_POST['submit'])){
-
     $title = sanitize(trim($_POST['title']));
     $author = sanitize(trim($_POST['author']));
     $label = sanitize(trim($_POST['label']));
@@ -14,24 +13,36 @@ if(isset($_POST['submit'])){
     $category = sanitize(trim($_POST['category']));
     $call = sanitize(trim($_POST['call']));
 
-$sql = "INSERT INTO books(bookTitle, author, ISBN, bookCopies, publisherName, available, categories, callNumber)
-                 values ('$title','$author','$label','$bookCopies','$publisher','$select','$category','$call')";
+    // Insert the new book into the 'books' table
+    $sql = "INSERT INTO books(bookTitle, author, ISBN, bookCopies, publisherName, available, categories, callNumber)
+            VALUES ('$title','$author','$label','$bookCopies','$publisher','$select','$category','$call')";
 
     $query = mysqli_query($conn, $sql);
 
-    if($query){
+    if ($query)
+    {
+        // If the book addition is successful, log the action in the audit trail
+        $bookId = mysqli_insert_id($conn); // Get the auto-incremented bookId of the inserted record
+
+        $auditMessage = "Book added: $title"; // Customize the audit log message as needed
+
+        // Insert the audit log into the 'audit_logs_books' table
+        $sql_audit = "INSERT INTO audit_logs_books (bookId, action) VALUES ('$bookId', '$auditMessage')";
+        mysqli_query($conn, $sql_audit);
+
         echo "<script>alert('New Book has been added ');
-					location.href ='bookstable.php';
-					</script>";
+                    location.href ='bookstable.php';
+                    </script>";
     }
-    else {
+
+    else
+    {
         echo "<script>alert('Book not added!');
-					</script>";	
+                    </script>";    
     }
-
 }
-
 ?>
+
 
 
 <div class="container">
