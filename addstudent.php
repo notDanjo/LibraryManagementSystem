@@ -53,27 +53,30 @@ if (isset($_FILES['postimg'])) {
 
     // echo $filename;
 
-   if ($password == $password2) {
-      $sql = "INSERT INTO students( matric_no, password, username, email, dept, numOfBooks, moneyOwed, photo, phoneNumber, name)
- VALUES ('$matric', '$password', '$username', '$email', '$dept', '$books', '$money', '$filename', '$phone', '$name' ) ";
+    if ($password == $password2) {
+        $sql = "INSERT INTO students(matric_no, password, username, email, dept, numOfBooks, moneyOwed, photo, phoneNumber, name)
+        VALUES ('$matric', '$password', '$username', '$email', '$dept', '$books', '$money', '$filename', '$phone', '$name')";
 
-      $query = mysqli_query($conn, $sql);
-      $error = false;
-      if($query){
-       $error = true;
-      }
-      else{
-        echo "<script>alert('Not Registered successful!! Try again.');
-                    </script>"; 
-      }
-   }
-   else {
-    echo  "<script>alert('Password mismatched!')</script>";
-   }
-    
+        $query = mysqli_query($conn, $sql);
 
+        if ($query) {
+            // Insert an audit log for the new student addition
+            $studentId = mysqli_insert_id($conn); // Get the auto-incremented studentId of the inserted record
+            $auditMessage = "Student added: $name (Matric No: $matric)";
+            $sql_audit = "INSERT INTO audit_logs_user (studentId, audit_logs) VALUES ('$studentId', '$auditMessage')";
+            mysqli_query($conn, $sql_audit);
+
+            echo "<script>alert('New student has been added.');
+                        location.href ='addstudent.php';
+                        </script>";
+        } else {
+            echo "<script>alert('Not registered successfully! Try again.');
+                        </script>"; 
+        }
+    } else {
+        echo "<script>alert('Password mismatched!')</script>";
+    }
 }
-
 ?>
 
 
