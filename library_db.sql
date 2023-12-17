@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2018 at 01:31 PM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 7.0.2
+-- Generation Time: Dec 17, 2023 at 09:07 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -33,7 +34,7 @@ CREATE TABLE `admin` (
   `username` varchar(60) NOT NULL,
   `email` varchar(60) NOT NULL,
   `photo` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
@@ -41,12 +42,42 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`adminId`, `adminName`, `password`, `username`, `email`, `photo`) VALUES
 (1, 'Nwachi', '1234', 'fozzy', 'fozzyington@gmail.com', '2086_1527169280.png'),
-(3, 'Vanessa Smith', '1234', 'smith', 'vanessa@gmail.com', 'posts-images/7197_1531096754.jpeg'),
-(4, 'Somto Aruonu', '1234', 'somatic', 'somygee@gmail.com', 'posts-images/2368_1531097680.jpeg'),
-(5, 'Jephthah Ugwuoke', '1234', 'jeph', 'jeph@gmail.com', 'posts-images/153114422990.jpeg'),
-(6, 'Ebenezer Bamination', '1234', 'eben', 'eben@gmail.com', 'posts-images/153114439974.jpeg'),
-(7, 'Ebuka Onyekwere', '1234', 'ebuka200', 'ebuka@gmail.com', 'posts-images/153139138928.jpeg'),
-(8, 'Ebuka Onyekwere', '1234', 'ebuka200', 'ebuka@gmail.com', 'posts-images/153139155541.jpeg');
+(3, 'Vanessa Smith', '1234', 'smith', 'vanessa@gmail.com', 'posts-images/7197_1531096754.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs_admin`
+--
+
+CREATE TABLE `audit_logs_admin` (
+  `audit_id` int(100) NOT NULL,
+  `adminId` int(11) NOT NULL,
+  `audit_logs` varchar(100) NOT NULL,
+  `audit_timestamp` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `audit_logs_admin`
+--
+
+INSERT INTO `audit_logs_admin` (`audit_id`, `adminId`, `audit_logs`, `audit_timestamp`) VALUES
+(1, 3, 'Admin 3 logged in', '2023-12-17 04:41:17'),
+(2, 3, 'Admin 3 logged in', '2023-12-17 06:40:12'),
+(3, 3, 'Admin 3 logged in', '2023-12-17 06:41:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs_user`
+--
+
+CREATE TABLE `audit_logs_user` (
+  `audit_id` int(100) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `audit_logs` varchar(100) NOT NULL,
+  `audit_timestamp` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -64,7 +95,7 @@ CREATE TABLE `books` (
   `available` varchar(10) NOT NULL,
   `categories` varchar(30) NOT NULL,
   `callNumber` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `books`
@@ -88,10 +119,19 @@ CREATE TABLE `borrow` (
   `bookName` varchar(255) NOT NULL,
   `borrowDate` varchar(20) NOT NULL,
   `returnDate` varchar(20) NOT NULL,
-  `bookId` int(2) NOT NULL,
+  `bookId` int(2) DEFAULT NULL,
   `borrowStatus` int(2) NOT NULL,
-  `fine` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `fine` varchar(100) NOT NULL,
+  `studentId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `borrow`
+--
+
+INSERT INTO `borrow` (`borrowId`, `memberName`, `matricNo`, `bookName`, `borrowDate`, `returnDate`, `bookId`, `borrowStatus`, `fine`, `studentId`) VALUES
+(1, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Oliver Twist', '', '', 6, 0, '591210', 0),
+(2, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Death of a million starts', '2023-12-16', '2023-12-19', 7, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +142,7 @@ CREATE TABLE `borrow` (
 CREATE TABLE `news` (
   `newsId` int(11) NOT NULL,
   `announcement` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `news`
@@ -110,7 +150,7 @@ CREATE TABLE `news` (
 
 INSERT INTO `news` (`newsId`, `announcement`) VALUES
 (1, 'Welcome to Our Online Library Management System. You can have access to all our e-books at a really good affordable price!'),
-(6, 'Man don''t dance'),
+(6, 'Man don\'t dance'),
 (9, 'Godfrey Okoye is going Places');
 
 -- --------------------------------------------------------
@@ -131,7 +171,7 @@ CREATE TABLE `students` (
   `photo` text NOT NULL,
   `phoneNumber` varchar(11) NOT NULL,
   `name` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `students`
@@ -152,6 +192,20 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`adminId`);
 
 --
+-- Indexes for table `audit_logs_admin`
+--
+ALTER TABLE `audit_logs_admin`
+  ADD PRIMARY KEY (`audit_id`),
+  ADD KEY `adminId` (`adminId`);
+
+--
+-- Indexes for table `audit_logs_user`
+--
+ALTER TABLE `audit_logs_user`
+  ADD PRIMARY KEY (`audit_id`),
+  ADD KEY `studentId` (`studentId`);
+
+--
 -- Indexes for table `books`
 --
 ALTER TABLE `books`
@@ -161,7 +215,8 @@ ALTER TABLE `books`
 -- Indexes for table `borrow`
 --
 ALTER TABLE `borrow`
-  ADD PRIMARY KEY (`borrowId`);
+  ADD PRIMARY KEY (`borrowId`),
+  ADD KEY `bookId` (`bookId`);
 
 --
 -- Indexes for table `news`
@@ -184,26 +239,60 @@ ALTER TABLE `students`
 --
 ALTER TABLE `admin`
   MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
--- AUTO_INCREMENT for table `books`
+-- AUTO_INCREMENT for table `audit_logs_admin`
 --
-ALTER TABLE `books`
-  MODIFY `bookId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `audit_logs_admin`
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `audit_logs_user`
+--
+ALTER TABLE `audit_logs_user`
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `borrow`
 --
 ALTER TABLE `borrow`
-  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
   MODIFY `newsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
   MODIFY `studentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `audit_logs_admin`
+--
+ALTER TABLE `audit_logs_admin`
+  ADD CONSTRAINT `audit_logs_admin_ibfk_1` FOREIGN KEY (`adminId`) REFERENCES `admin` (`adminId`);
+
+--
+-- Constraints for table `audit_logs_user`
+--
+ALTER TABLE `audit_logs_user`
+  ADD CONSTRAINT `audit_logs_user_ibfk_1` FOREIGN KEY (`studentId`) REFERENCES `students` (`studentId`);
+
+--
+-- Constraints for table `borrow`
+--
+ALTER TABLE `borrow`
+  ADD CONSTRAINT `borrow_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
