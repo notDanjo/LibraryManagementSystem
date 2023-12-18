@@ -116,6 +116,7 @@ if (isset($_POST['submit'])) {
 					<!-- Right navigation items go here -->
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="login.php">Login</a></li>
+						<li><a href="addstudent.php">Sign Up</a></li>
 					</ul>
 				</div>
 			</div>
