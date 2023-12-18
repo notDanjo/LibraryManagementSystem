@@ -40,8 +40,7 @@ require 'includes/db-inc.php';
         $text = sanitize(trim($_POST['text']));
 
         $sql_up = "UPDATE news set announcement = '$text' where newsId = '$id'";
-		$result = mysqli_query($conn, $sql_del);
-		echo $result;
+		echo mysqli_error($sql_up);
          $result = mysqli_query($conn,$sql_del);
                 if ($result)
                 {
@@ -107,6 +106,7 @@ require 'includes/db-inc.php';
 <div class="container">
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
+			
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example">
 					<span class="sr-only">:</span>
@@ -117,8 +117,9 @@ require 'includes/db-inc.php';
 				<div class = "logo">
 					<img src="images/Logo.png">
 				</div>
+				
 			</div>
-
+			 
 			<div class="collapse navbar-collapse" id="bs-example">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Home</a></li>
@@ -167,60 +168,6 @@ require 'includes/db-inc.php';
 		</div>
 
 			  <!-- Default panel contents -->
-	
-
-
-
-
-
-		<div class="container slide2">
-			
-			  <div class="panel-heading">
-		  	<div class="row">
-		  		<h3 class="center-block" style="font-size: 30px;">Published Announcements</h3>
-			</div>
-		  </div>
-		  <table class="table table-bordered" style="font-size: 18px;">
-         
-
-      		<thead>
-                <tr>
-                    <th>NewsId</th>
-                         <th>Announcement</th>
-                          
-                        
-                </tr>
-          </thead>
-
-           <?php 
-
-          $sql2 = "SELECT * from news";
-
-      $query2 = mysqli_query($conn, $sql2);
-      $counter = 1;
-      while ($row = mysqli_fetch_array($query2)) {  ?>
-
-
-        <tbody >
-          <td><?php echo $counter++; ?></td>
-          <td><?php echo $row['announcement']; ?></td>
-        
-        </tbody>
-
-     <?php }
-           ?>
-		        
-		         </tbody> 
-		   </table>
-		 
-	  </div>
-
-			
-			</div>
-	</div>
-
-
-
 	  		<!-- <div class="row">
 	  			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
 		  			<div class="page-header col-lg-offset-1">
