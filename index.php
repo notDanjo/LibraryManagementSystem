@@ -114,7 +114,9 @@ require 'includes/db-inc.php';
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Library Management System</a>
+				<div class = "logo">
+					<img src="images/Logo.png">
+				</div>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example">
