@@ -17,45 +17,11 @@ if(isset($_POST['submit'])) {
     $name = sanitize(trim($_POST['name']));
     $filename =''; 
 
-if (isset($_FILES['postimg'])) {
-        $img_size = $_FILES['postimg']['size'];
-        $temp = $_FILES['postimg']['tmp_name'];
-        $img_type = $_FILES['postimg']['type'];
-        $img_name = $_FILES['postimg']['name'];
-
-        if ($img_size > 500000) {
-            $err_flag = true;
-            $error = "Your image size is too big... Try again.";
-        }
-
-        $extensions = array('jpg', 'jpeg', 'png', 'gif');
-        $img_ext = explode('/', $img_type);
-        $img_ext = end($img_ext);
-        $img_ext = strtolower($img_ext);
-        if (!(in_array($img_ext, $extensions))) {
-            $err_flag = true;
-            $error = "Unwanted image file type... Only jpg,jpeg,png and gif allowed";
-        }
-        // Prepare image folder in the server
-        $imgFile = 'posts-images/';
-        $filename = rand(1000, 8000) . '_' .time() . '.' . $img_ext;
-        $filepath = $imgFile . $filename;
-        // if (isset($err_flag) && $err_flag === false) {
-        //     $result = move_uploaded_file($temp, $filepath);
-        //     if ($result) {
-        //         $magicianObj = new imageLib($filepath);
-        //         $magicianObj -> resizeImage(100, 100);
-        //         $magicianObj -> saveImage($imgFile . 'thumbnails/' . $filename, 100);
-        //         $img_path = $imgFile.$img_name;
-        //     }
-        // }
-    }
-
     // echo $filename;
 
     if ($password == $password2) {
-        $sql = "INSERT INTO students(matric_no, password, username, email, dept, numOfBooks, moneyOwed, photo, phoneNumber, name)
-        VALUES ('$matric', '$password', '$username', '$email', '$dept', '$books', '$money', '$filename', '$phone', '$name')";
+        $sql = "INSERT INTO students(matric_no, password, username, email, dept, numOfBooks, moneyOwed, phoneNumber, name)
+        VALUES ('$matric', '$password', '$username', '$email', '$dept', '$books', '$money', '$phone', '$name')";
 
         $query = mysqli_query($conn, $sql);
 
@@ -67,7 +33,7 @@ if (isset($_FILES['postimg'])) {
             mysqli_query($conn, $sql_audit);
 
             echo "<script>alert('New student has been added.');
-                        location.href ='addstudent.php';
+                        location.href ='login.php';
                         </script>";
         } else {
             echo "<script>alert('Not registered successfully! Try again.');
@@ -148,14 +114,6 @@ if (isset($_FILES['postimg'])) {
                             <input type="text" class="form-control" name="phone" placeholder="phone" id="password" required>
                         </div>      
                     </div>     
-                         
-                    
-                     <div class="form-group">
-                        <label class="col-sm-2 control-label">IMAGE</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" name="postimg" placeholder="Enter image" id="password" style="padding: 0" required>
-                        </div>      
-                    </div>
                     
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
