@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2023 at 09:07 AM
+-- Generation Time: Dec 18, 2023 at 02:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -64,7 +64,34 @@ CREATE TABLE `audit_logs_admin` (
 INSERT INTO `audit_logs_admin` (`audit_id`, `adminId`, `audit_logs`, `audit_timestamp`) VALUES
 (1, 3, 'Admin 3 logged in', '2023-12-17 04:41:17'),
 (2, 3, 'Admin 3 logged in', '2023-12-17 06:40:12'),
-(3, 3, 'Admin 3 logged in', '2023-12-17 06:41:07');
+(3, 3, 'Admin 3 logged in', '2023-12-17 06:41:07'),
+(4, 3, 'Admin 3 logged in', '2023-12-17 20:29:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs_books`
+--
+
+CREATE TABLE `audit_logs_books` (
+  `auditId_books` int(11) NOT NULL,
+  `bookId` int(11) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `audit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs_borrow`
+--
+
+CREATE TABLE `audit_logs_borrow` (
+  `auditId_borrow` int(11) NOT NULL,
+  `borrowId` int(11) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `audit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -78,6 +105,14 @@ CREATE TABLE `audit_logs_user` (
   `audit_logs` varchar(100) NOT NULL,
   `audit_timestamp` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `audit_logs_user`
+--
+
+INSERT INTO `audit_logs_user` (`audit_id`, `studentId`, `audit_logs`, `audit_timestamp`) VALUES
+(1, 6, 'Student added: asdf (Matric No: ADSE-9831)', '2023-12-18 02:41:47'),
+(2, 6, 'Student 6 logged in', '2023-12-17 20:27:45');
 
 -- --------------------------------------------------------
 
@@ -130,8 +165,8 @@ CREATE TABLE `borrow` (
 --
 
 INSERT INTO `borrow` (`borrowId`, `memberName`, `matricNo`, `bookName`, `borrowDate`, `returnDate`, `bookId`, `borrowStatus`, `fine`, `studentId`) VALUES
-(1, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Oliver Twist', '', '', 6, 0, '591210', 0),
-(2, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Death of a million starts', '2023-12-16', '2023-12-19', 7, 0, '', 0);
+(1, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Oliver Twist', '', '', 6, 0, 'Paid', 0),
+(2, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Death of a million starts', '2023-12-16', '2023-12-19', 7, 0, 'Paid', 0);
 
 -- --------------------------------------------------------
 
@@ -179,7 +214,8 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`studentId`, `matric_no`, `password`, `username`, `email`, `dept`, `numOfBooks`, `moneyOwed`, `photo`, `phoneNumber`, `name`) VALUES
 (1, 'ADSE-9835', '1234', 'bams', 'fuzzy245.in@gmail.com', 'Software Engineering', 2, '1500', '4477_1526321327.jpeg', '08124579655', 'Nwachinemere Ibeagi'),
-(2, 'ADSE-9835', '1234', 'somty', 'somygee@gmail.com', 'Software Engineering', 2, '1234', '2093_1531223199.jpeg', '08124578966', 'Somtochukwu Ugwu');
+(2, 'ADSE-9835', '1234', 'somty', 'somygee@gmail.com', 'Software Engineering', 2, '1234', '2093_1531223199.jpeg', '08124578966', 'Somtochukwu Ugwu'),
+(6, 'ADSE-9831', '1234', 'kurtd', 'asdf@gmail.com', 'IT', 0, 'null', '7201_1702838507.jpeg', 'asdf@gmail.', 'asdf');
 
 --
 -- Indexes for dumped tables
@@ -197,6 +233,20 @@ ALTER TABLE `admin`
 ALTER TABLE `audit_logs_admin`
   ADD PRIMARY KEY (`audit_id`),
   ADD KEY `adminId` (`adminId`);
+
+--
+-- Indexes for table `audit_logs_books`
+--
+ALTER TABLE `audit_logs_books`
+  ADD PRIMARY KEY (`auditId_books`),
+  ADD KEY `bookId` (`bookId`);
+
+--
+-- Indexes for table `audit_logs_borrow`
+--
+ALTER TABLE `audit_logs_borrow`
+  ADD PRIMARY KEY (`auditId_borrow`),
+  ADD KEY `borrowId` (`borrowId`);
 
 --
 -- Indexes for table `audit_logs_user`
@@ -244,13 +294,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_admin`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `audit_logs_books`
+--
+ALTER TABLE `audit_logs_books`
+  MODIFY `auditId_books` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `audit_logs_borrow`
+--
+ALTER TABLE `audit_logs_borrow`
+  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_user`
 --
 ALTER TABLE `audit_logs_user`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `borrow`
@@ -268,7 +330,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `studentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `studentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -279,6 +341,18 @@ ALTER TABLE `students`
 --
 ALTER TABLE `audit_logs_admin`
   ADD CONSTRAINT `audit_logs_admin_ibfk_1` FOREIGN KEY (`adminId`) REFERENCES `admin` (`adminId`);
+
+--
+-- Constraints for table `audit_logs_books`
+--
+ALTER TABLE `audit_logs_books`
+  ADD CONSTRAINT `audit_logs_books_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
+
+--
+-- Constraints for table `audit_logs_borrow`
+--
+ALTER TABLE `audit_logs_borrow`
+  ADD CONSTRAINT `audit_logs_borrow_ibfk_1` FOREIGN KEY (`borrowId`) REFERENCES `borrow` (`borrowId`);
 
 --
 -- Constraints for table `audit_logs_user`
