@@ -1,5 +1,6 @@
 body{
   overflow-x: hidden;
+  padding-top: 150px;
 }
 
 .slide{
@@ -58,3 +59,30 @@ label{margin-top: 5px}
 .button{height: 48px}
 .admin_name,h4{color: red;font-family: gabriola;font-size: 60px}
 /*.form{margin-bottom: 30px}*/
+
+.logo img {
+  width: 500px;
+  height: auto;
+}
+
+.navbar-flex-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar-section {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-header {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  max-width: 200px;  /* Adjust as needed */
+}
+
+.navbar-brand {
+  font-size: 14px;  /* Adjust as needed */
+}

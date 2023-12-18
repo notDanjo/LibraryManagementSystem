@@ -6,91 +6,87 @@
 // 	exit();
 // }
 // else {
- 	// $admin = $_SESSION['admin'];
+// $admin = $_SESSION['admin'];
 // }
 require 'includes/snippet.php';
 require 'includes/db-inc.php';
- include "includes/header.php";
+include "includes/header.php";
 
-	// if(isset($_SESSION['admin'])){
-	// 	$admin = $_SESSION['admin'];
-	// 	// echo "Hello $user";
-	// }
+// if(isset($_SESSION['admin'])){
+// 	$admin = $_SESSION['admin'];
+// 	// echo "Hello $user";
+// }
 
- if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
 
-    $news = sanitize(trim($_POST['news']));
+	$news = sanitize(trim($_POST['news']));
 
-    $sql = "INSERT into news (announcement) values ('$news')"; 
+	$sql = "INSERT into news (announcement) values ('$news')";
 
-    $query = mysqli_query($conn,$sql);
-    $error = false;
+	$query = mysqli_query($conn, $sql);
+	$error = false;
 
-       if($query){
-       $error = true;
-      }
-      else{
-        echo "<script>alert('Not successful!! Try again.');
-                    </script>"; 
-      }
- }
+	if ($query) {
+		$error = true;
+	} else {
+		echo "<script>alert('Not successful!! Try again.');
+                    </script>";
+	}
+}
 
-     if(isset($_POST['UpDat'])){
-		$id = sanitize(trim($_POST['id']));
-        $text = sanitize(trim($_POST['text']));
+if (isset($_POST['UpDat'])) {
+	$id = sanitize(trim($_POST['id']));
+	$text = sanitize(trim($_POST['text']));
 
-        $sql_up = "UPDATE news set announcement = '$text' where newsId = '$id'";
-		echo mysqli_error($sql_up);
-         $result = mysqli_query($conn,$sql_del);
-                if ($result)
-                {
-                    echo "<script>
+	$sql_up = "UPDATE news set announcement = '$text' where newsId = '$id'";
+	$result = mysqli_query($conn, $sql_del);
+	echo $result;
+	$result = mysqli_query($conn, $sql_del);
+	if ($result) {
+		echo "<script>
             
            
                    alert('Update successful');
 
          </script>";
-                }
+	}
+}
+
+if (isset($_POST['del'])) {
+
+	$id = sanitize(trim($_POST['id']));
+
+	$sql_del = "DELETE from news where newsId = $id";
+
+	$result = mysqli_query($conn, $sql_del);
+	if ($result) {
+		//            echo "<script>
+
+		//    var response = confirm('Would you like to delete the user');
+		//    if (response == true) {
+		//        alert('User was successfully deleted from the database');
+		//            location.href ='admin.php';
+		//    }   
+
+		//    else
+		//        {
+		//            alert('Could not delete user');
+		//        }
 
 
-     }
-
-     if(isset($_POST['del'])){
-
-        $id = sanitize(trim($_POST['id']));
-
-        $sql_del = "DELETE from news where newsId = $id"; 
-
-        $result = mysqli_query($conn,$sql_del);
-                if ($result)
-                {
-         //            echo "<script>
-            
-         //    var response = confirm('Would you like to delete the user');
-         //    if (response == true) {
-         //        alert('User was successfully deleted from the database');
-         //            location.href ='admin.php';
-         //    }   
-
-         //    else
-         //        {
-         //            alert('Could not delete user');
-         //        }
-            
-
-         // </script>";
-                }
-
-     }
+		// </script>";
+	}
+}
 
 
 
 
 
 
-  ?>
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -102,73 +98,69 @@ require 'includes/db-inc.php';
 	<title>Library Management</title>
 
 </head>
+
 <body>
-<div class="container">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example">
-					<span class="sr-only">:</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<div class = "logo">
-					<img src="images/Logo.png">
-				</div>
-				
-			</div>
-			 
-			<div class="collapse navbar-collapse" id="bs-example">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-										
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="login.php">Login</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-</div>
-
-		<div class="container-fluid slide">
-			
-	  		<div class="slider">
-	  			<!-- <h1>Flickity - wrapAround</h1> -->
-
-
-					<div class="carousel" data-flickity='{ "autoPlay": true }'; >
-
-						  <div class="carousel-cell" auto-play >
-						  	<img src="ify/1.jpeg">
-						  </div>
-						  <div class="carousel-cell" auto-play>
-						  	<img src="ify/2.jpeg">
-
-						  </div>
-						  <div class="carousel-cell" auto-play>
-						  	 <img src="ify/3.jpeg">
-						  </div>
-						  
-						  <div class="carousel-cell" auto-play >
-						  	<img src="ify/4.jpeg">
-						  </div>
-						   <div class="carousel-cell" auto-play>
-						  	<img src="ify/5.jpeg">
-						  </div>
-
+	<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-flex-container">
+					<div class="navbar-section">
+						<!-- Left navigation items go here -->
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#">Home</a></li>
+						</ul>
 					</div>
+					<div class="navbar-header">
+						<div class="logo">
+							<img src="images/Logo.png">
+						</div>
+					</div>
+					<div class="navbar-section">
+						<!-- Right navigation items go here -->
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="login.php">Login</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
 
-					
+	<div class="container-fluid slide">
 
-	  		</div>
+		<div class="slider">
+			<!-- <h1>Flickity - wrapAround</h1> -->
+
+
+			<div class="carousel" data-flickity='{ "autoPlay": true }' ;>
+
+				<div class="carousel-cell" auto-play>
+					<img src="ify/1.jpeg">
+				</div>
+				<div class="carousel-cell" auto-play>
+					<img src="ify/2.jpeg">
+
+				</div>
+				<div class="carousel-cell" auto-play>
+					<img src="ify/3.jpeg">
+				</div>
+
+				<div class="carousel-cell" auto-play>
+					<img src="ify/4.jpeg">
+				</div>
+				<div class="carousel-cell" auto-play>
+					<img src="ify/5.jpeg">
+				</div>
+
+			</div>
+
+
+
 		</div>
+	</div>
 
-			  <!-- Default panel contents -->
-	  		<!-- <div class="row">
+	<!-- Default panel contents -->
+	<!-- <div class="row">
 	  			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
 		  			<div class="page-header col-lg-offset-1">
 		  				<h2>Welcome to our portal</h2>
@@ -207,9 +199,9 @@ require 'includes/db-inc.php';
 	  		</div>
 		</div> -->
 
-		<div class="container-fluid slide3" style="background-color: #282828">
-			<div class="container">
-				<div class="row">
+	<div class="container-fluid slide3" style="background-color: #282828">
+		<div class="container">
+			<div class="row">
 				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<a href="#" class="thumbnail">
 						<img src="ify/9.jpeg">
@@ -231,13 +223,14 @@ require 'includes/db-inc.php';
 					</a>
 				</div>
 			</div>
-			</div>
-			
 		</div>
-		
+
+	</div>
 
 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
+
 </html>
