@@ -1,5 +1,5 @@
 <?php 
-		require 'includes/snippet.php';
+	require 'includes/snippet.php';
 	require 'includes/db-inc.php';
 	include "includes/header.php";
 
@@ -91,35 +91,30 @@
 
 
 //Check if the password matches
-		if ($password1 == $password2) {
-			//create an sql statement
-		$sql =
-		 "INSERT into admin (adminName, password, username, email, photo) values ('$name', '$password1', '$username', '$email', '$img_path')";
-		 
-		  echo $img_picture;
+if ($password1 == $password2) {
+	// Insert admin into the 'admin' table
+	$sql = "INSERT INTO admin (adminName, password, username, email, photo) VALUES ('$name', '$password1', '$username', '$email', '$img_path')";
+	$query = mysqli_query($conn, $sql);
 
-		//query the database
-		$query = mysqli_query($conn, $sql);
-		$error = false;
+	if ($query) {
+		// Insert an audit log for the admin addition
+		$adminId = mysqli_insert_id($conn); // Get the auto-incremented adminId of the inserted record
+		$auditMessage = "Admin added: $name (Username: $username)";
+		$sql_audit = "INSERT INTO audit_logs_admin (adminId, audit_logs) VALUES ('$adminId', '$auditMessage')";
+		mysqli_query($conn, $sql_audit);
 
-		if ($query) {
-		$error = true;
-		}
-		else {
+		echo "<script>alert('Admin added successfully.');
+				location.href ='adminstable.php';
+				</script>";
+	} else {
 		echo "<script>alert('Admin not added!');
-					</script>";	
-		}
-
-		}
-
-		else {
-			echo  "<script>alert('Password mismatched!')</script>";
-		}
-
-		
+				</script>";
 	}
-
- ?>
+} else {
+	echo "<script>alert('Password mismatched!')</script>";
+}
+}
+?>
 
 
 <div class="container">
