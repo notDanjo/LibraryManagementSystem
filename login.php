@@ -117,7 +117,7 @@ if (isset($_POST['submit']))
 					<span class="icon-bar"></span>
 				</button>
 				<div class = "logo">
-					<img src="images/logo1.png">
+					<img src="images/Logo.png">
 				</div>
 				
 			</div>
