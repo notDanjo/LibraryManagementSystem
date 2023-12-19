@@ -36,7 +36,7 @@ $query_borrow = mysqli_query($conn, $sql_borrow);
 ?>
 
 <div class="container">
-    <?php include "includes/nav2.php"; ?>
+    <?php include "includes/nav.php"; ?>
     <form action="" method="GET">
         <input type="text" name="search_query" placeholder="Search">
         <input type="submit" value="Search">
