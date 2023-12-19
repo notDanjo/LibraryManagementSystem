@@ -33,6 +33,7 @@ if (isset($_SESSION['student-name'])) {
                                 <li class="nav-item"><a href="users.php">Admins</a></li>
                                 <li class="nav-item"><a href="viewstudents.php">Students</a></li>
                                 <li class="nav-item"><a href="fines.php">Fines</a></li>
+                                <li class="nav-item"><a href="audit_logs.php">Audit Logs</a></li>
                             <?php } ?>
                         </ul>
                     </div>
