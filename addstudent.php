@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 				</div>
 			<?php } ?>
 
-			<p class="page-header" style="text-align: center">ADD STUDENTS</p>
+			<p class="page-header" style="text-align: center">Sign In</p>
 
 			<div class="container">
 				<form class="form-horizontal" role="form" action="addstudent.php" method="post" enctype="multipart/form-data">
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<button class="btn btn-info col-lg-12" data-toggle="modal" data-target="#info" name="submit">
-								ADD MEMBER
+								Sign In
 							</button>
 						</div>
 					</div>
