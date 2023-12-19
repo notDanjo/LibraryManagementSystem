@@ -18,14 +18,11 @@ include "includes/header.php";
 
 <div class="container">
 	<?php include "includes/nav.php"; ?>
-	<!-- navbar ends -->
-	<!-- info alert -->
 	<div class="alert alert-warning col-lg-7 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-0 col-sm-offset-1 col-xs-offset-0" style="margin-top:70px">
 
 		<span class="glyphicon glyphicon-book"></span>
-		<strong>Borrow Books</strong>
+		<strong>Borrowed Books</strong>
 	</div>
-
 </div>
 
 <div class="container">
@@ -33,20 +30,8 @@ include "includes/header.php";
 		<!-- Default panel contents -->
 		<div class="panel-heading">
 			<div class="row">
-
-				<!--          <a href="lendbook.php"><button class="btn btn-success col-lg-3 col-md-4 col-sm-11 col-xs-11 button" style="margin-left: 15px;margin-bottom: 5px"><span class="glyphicon glyphicon-plus-sign"></span> Lend Book</button></a>-->
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
-					<!--  <form method="post" action="borrowedbooks.php" enctype="multipart/form-data">
-			  		<div class="input-group pull-right">
-				      <span class="input-group-addon">
-				        <button class="btn btn-success" name="search">Search</button> 
-				      </span>
-				      <input type="text" class="form-control" name="text">
-			      </div>
-			  	</form> -->
-
-				</div><!-- /.col-lg-6 -->
-
+				</div>
 			</div>
 		</div>
 
@@ -81,23 +66,6 @@ include "includes/header.php";
 
 			?>
 		</table>
-
-
-		<!-- //  echo "<td>
-					//  <a href='lendbook.php'>
-					
-					//  <button class='btn btn-success' name='submit'>Borrow Now</button>
-					//  </a>
-					 -->
-
-
-		<!--		             <td><button class="btn btn-info" data-toggle="modal" data-target="#popUpWindow">BORROW NOW</button></td>-->
-		<!-- <td><a href="lendbook.php" <button class="btn btn-success ">Borrow Now</button></a></td> -->
-
-
-
-
-
 	</div>
 </div>
 <div class="mod modal fade" id="popUpWindow">
