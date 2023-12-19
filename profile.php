@@ -60,7 +60,7 @@ if ($row = mysqli_fetch_assoc($query)) {
     <body>
     <div class="container">
         <!-- Navbar -->
-        <?php include "includes/nav.php"; ?>
+        <?php include "includes/nav2.php"; ?>
     </div>
 
     <div class="container" style="margin-top: 100px">
