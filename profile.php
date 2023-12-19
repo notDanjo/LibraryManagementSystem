@@ -13,65 +13,34 @@ if (isset($_POST['update'])) {
     $newUsername = mysqli_real_escape_string($conn, $_POST['new_username']);
     $newPassword = mysqli_real_escape_string($conn, $_POST['new_password']);
 
-    // Fetch the existing user data before the update
-    $fetchOldDataSql = "SELECT * FROM students WHERE username = '$student_name'";
-    $fetchOldDataQuery = mysqli_query($conn, $fetchOldDataSql);
+    $updateSql = "UPDATE students SET
+        name = '$newName',
+        matric_no = '$newMatricNo',
+        email = '$newEmail',
+        dept = '$newDept',
+        phoneNumber = '$newPhoneNumber',
+        username = '$newUsername',
+        password = '$newPassword'
+        WHERE username = '$student_name'";
 
-    if ($oldRow = mysqli_fetch_assoc($fetchOldDataQuery)) {
-        // Prepare the audit log message
-        $auditMessage = "User (ID: {$oldRow['studentId']}, Name: {$oldRow['name']}, Username: $student_name) updated. Changes: ";
-
-        // Compare old and new data and append changes to the audit log message
-        if ($oldRow['name'] != $newName) {
-            $auditMessage .= "Name: {$oldRow['name']} -> $newName, ";
-        }
-        if ($oldRow['matric_no'] != $newMatricNo) {
-            $auditMessage .= "Matric No: {$oldRow['matric_no']} -> $newMatricNo, ";
-        }
-        // Add similar comparisons for other fields
-
-        // Remove the trailing comma and space
-        $auditMessage = rtrim($auditMessage, ', ');
-
-        // Update the user data
-        $updateSql = "UPDATE students SET
-            name = '$newName',
-            matric_no = '$newMatricNo',
-            email = '$newEmail',
-            dept = '$newDept',
-            phoneNumber = '$newPhoneNumber',
-            username = '$newUsername',
-            password = '$newPassword'
-            WHERE username = '$student_name'";
-
-        $updateQuery = mysqli_query($conn, $updateSql);
-        
-        // ...
-
-        if ($updateQuery) {
-            // Insert the audit log into the audit_logs_user table
-            $insertAuditSql = "INSERT INTO audit_logs_user (studentId, audit_logs) VALUES ('{$oldRow['studentId']}', '$auditMessage')";
-            mysqli_query($conn, $insertAuditSql);
-
-            // Update the session variable with the new username
-            $_SESSION['student-username'] = $newUsername;
-
-            // Redirect only if the session is valid
-            if (isset($_SESSION['student-username'])) {
-                echo "<script>alert('Profile updated successfully!'); window.location.href='profile.php';</script>";
-                exit();
-            }
-        } else {
-            echo "<script>alert('Failed to update profile.');</script>";
-        }
-
-// ...
-
-    }
+    $updateQuery = mysqli_query($conn, $updateSql);
+	if ($updateQuery) {
+		// Update the session variable with the new username
+		$_SESSION['student-username'] = $newUsername;
+	
+		// Redirect only if the session is valid
+		if (isset($_SESSION['student-username'])) {
+			echo "<script>alert('Profile updated successfully!'); window.location.href='profile.php';</script>";
+			exit();
+		}
+	} else {
+		echo "<script>alert('Failed to update profile.');</script>";
+	}
 }
 
 $sql = "SELECT * FROM students WHERE username = '$student_name'";
 $query = mysqli_query($conn, $sql);
+
 // Assuming there's only one result since usernames are typically unique
 if ($row = mysqli_fetch_assoc($query)) {
     ?>
@@ -91,7 +60,7 @@ if ($row = mysqli_fetch_assoc($query)) {
     <body>
     <div class="container">
         <!-- Navbar -->
-        <?php include "includes/nav.php"; ?>
+        <?php include "includes/nav2.php"; ?>
     </div>
 
     <div class="container" style="margin-top: 100px">
