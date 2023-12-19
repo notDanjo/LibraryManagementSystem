@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if (isset($_SESSION['admin'])) {
@@ -58,7 +59,9 @@ $query = mysqli_query($conn, $sql);
 $counter = 1;
 ?>
 
+
 <div class="container">
+
     <?php include "includes/nav.php"; ?>
 
     <div class="alert alert-warning col-lg-7 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-0 col-sm-offset-1 col-xs-offset-0" style="margin-top:70px">
@@ -127,9 +130,11 @@ $counter = 1;
     </div>
 </div>
 
+
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript">
+
     function hey() {
         alert("Hello");
     }
