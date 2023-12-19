@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 // session_destroy();
 // if (!(isset($_SESSION['auth']) && $_SESSION['auth'] === true)) {
 // 	header("Location: admin.php?access=false");
