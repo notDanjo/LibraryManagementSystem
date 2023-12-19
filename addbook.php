@@ -1,4 +1,11 @@
 <?php 
+
+session_start();
+if (!isset($_SESSION['admin'])) {
+	header("Location: studentportal.php");
+	exit();
+}
+
 require 'includes/snippet.php';
 require 'includes/db-inc.php';
 include "includes/header.php";
