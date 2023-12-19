@@ -13,33 +13,79 @@ if (isset($_POST['update'])) {
     $newUsername = mysqli_real_escape_string($conn, $_POST['new_username']);
     $newPassword = mysqli_real_escape_string($conn, $_POST['new_password']);
 
-    $updateSql = "UPDATE students SET
-        name = '$newName',
-        matric_no = '$newMatricNo',
-        email = '$newEmail',
-        dept = '$newDept',
-        phoneNumber = '$newPhoneNumber',
-        username = '$newUsername',
-        password = '$newPassword'
-        WHERE username = '$student_name'";
+    // Fetch the existing user data before the update
+    $fetchOldDataSql = "SELECT * FROM students WHERE username = '$student_name'";
+    $fetchOldDataQuery = mysqli_query($conn, $fetchOldDataSql);
 
-    $updateQuery = mysqli_query($conn, $updateSql);
-	if ($updateQuery) {
-		// Update the session variable with the new username
-		$_SESSION['student-username'] = $newUsername;
-	
-		// Redirect only if the session is valid
-		if (isset($_SESSION['student-username'])) {
-			echo "<script>alert('Profile updated successfully!'); window.location.href='profile.php';</script>";
-			exit();
-		}
-	} else {
-		echo "<script>alert('Failed to update profile.');</script>";
-	}
+    if ($oldRow = mysqli_fetch_assoc($fetchOldDataQuery)) {
+        // Prepare the audit log message
+        $auditMessage = "User (ID: {$oldRow['studentId']}, Name: {$oldRow['name']}, Username: $student_name) updated. Changes: ";
+
+        // Compare old and new data and append changes to the audit log message
+        if ($oldRow['name'] != $newName) {
+            $auditMessage .= "Name: {$oldRow['name']} -> $newName, ";
+        }
+        if ($oldRow['matric_no'] != $newMatricNo) {
+            $auditMessage .= "Matric No: {$oldRow['matric_no']} -> $newMatricNo, ";
+        }
+        if ($oldRow['email'] != $newEmail) {
+            $auditMessage .= "Email: {$oldRow['email']} -> $newEmail, ";
+        }
+        if ($oldRow['dept'] != $newDept) {
+            $auditMessage .= "Department: {$oldRow['dept']} -> $newDept, ";
+        }
+        if ($oldRow['phoneNumber'] != $newPhoneNumber) {
+            $auditMessage .= "Phone Number: {$oldRow['phoneNumber']} -> $newPhoneNumber, ";
+        }
+        if ($oldRow['username'] != $newUsername) {
+            $auditMessage .= "Username: {$oldRow['username']} -> $newUsername, ";
+        }
+        if ($oldRow['password'] != $newPassword) {
+            $auditMessage .= "Password: {$oldRow['password']} -> $newPassword, ";
+        }
+        // Add similar comparisons for other fields
+
+        // Remove the trailing comma and space
+        $auditMessage = rtrim($auditMessage, ', ');
+
+        // Insert the audit log
+        $auditInsertSql = "INSERT INTO audit_logs_user (studentId, audit_logs) VALUES ({$oldRow['studentId']}, '$auditMessage')";
+        $auditInsertQuery = mysqli_query($conn, $auditInsertSql);
+
+        if (!$auditInsertQuery) {
+            echo "Audit Log Insertion Error: " . mysqli_error($conn);
+        }
+
+        // Update the user data
+        $updateSql = "UPDATE students SET
+            name = '$newName',
+            matric_no = '$newMatricNo',
+            email = '$newEmail',
+            dept = '$newDept',
+            phoneNumber = '$newPhoneNumber',
+            username = '$newUsername',
+            password = '$newPassword'
+            WHERE username = '$student_name'";
+
+        $updateQuery = mysqli_query($conn, $updateSql);
+
+        if ($updateQuery) {
+            // Update the session variable with the new username
+            $_SESSION['student-username'] = $newUsername;
+
+            // Redirect
+            header("Location: profile.php");
+            exit();
+        } else {
+            echo "<script>alert('Failed to update profile.');</script>";
+            echo "Update Query Error: " . mysqli_error($conn);
+        }
+    }
 }
 
 $sql = "SELECT * FROM students WHERE username = '$student_name'";
 $query = mysqli_query($conn, $sql);
+
 
 // Assuming there's only one result since usernames are typically unique
 if ($row = mysqli_fetch_assoc($query)) {
@@ -107,7 +153,7 @@ if ($row = mysqli_fetch_assoc($query)) {
             </form>
         </div>
     </div>
-	<script type="text/javascript">
+    <script type="text/javascript">
         function updateProfile() {
             alert('Profile updated successfully!');
             window.location.href = 'profile.php';
