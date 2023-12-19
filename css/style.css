@@ -5,11 +5,8 @@ body{
 
 .slide{
   margin-top: 51px;
-  /*border:2px solid red;*/
   padding: 0;
 } 
-
-/*.navigation{height: 70px;padding: 10px}*/
 
 .slide3{
   margin-top: 100px;
@@ -24,7 +21,6 @@ body{
 
 .slide2{
   margin-top: 20px;
-  /*border:2px solid red;*/
   padding: 0;
 } 
 
@@ -65,6 +61,11 @@ label{margin-top: 5px}
   height: auto;
 }
 
+.navbar-nav {
+  display: flex;
+  justify-content: space-around;  /* Distribute items evenly with space around them */
+}
+
 .navbar-flex-container {
   display: flex;
   justify-content: space-between;
@@ -79,7 +80,7 @@ label{margin-top: 5px}
 .navbar-header {
   display: flex;
   justify-content: center;
-  flex-grow: 1;
+  flex-grow: 0;
   max-width: 200px;  /* Adjust as needed */
 }
 
@@ -98,4 +99,25 @@ label{margin-top: 5px}
   background-color: #ffffff;  /* Change the background color on hover */
   color: #000000;  /* Change the text color on hover */
   border-radius: 5px;
+}
+
+.unique-class .navbar .nav > li > a {
+  padding: 10px 5px;  /* Reduce the horizontal padding */
+  margin: 5px 2px;  /* Reduce the horizontal margin */
+}
+
+.unique-class .navbar-section:first-child {
+    max-width: 200px;  /* Adjust as needed */
+}
+
+.navbar-flex-container .navbar-section:first-child {
+  flex-grow: 0;  /* Prevent the section from growing beyond its content size */
+  padding: 0;  /* Remove padding */
+  margin: 0;  /* Remove margin */
+}
+
+.nav-item {
+  flex-grow: 1;  /* Allow the items to grow and take up remaining space */
+  text-align: center;  /* Center the text within the items */
+  white-space: nowrap;
 }
