@@ -1,7 +1,19 @@
 <?php
-require 'includes/db-inc.php';
 session_start();
+
+require 'includes/db-inc.php';
 $student_name = $_SESSION['student-username'];
+
+$sql = "SELECT * FROM students WHERE username = '$student_name'";
+$query = mysqli_query($conn, $sql);
+
+$row = null; // Declare the $row variable here
+
+// Assuming there's only one result since usernames are typically unique
+if ($result = mysqli_fetch_assoc($query)) {
+    $row = $result;
+    $_SESSION['studentId'] = $row['studentId'];
+}
 
 if (isset($_POST['update'])) {
     // Handle the update logic here
@@ -24,40 +36,46 @@ if (isset($_POST['update'])) {
         WHERE username = '$student_name'";
 
     $updateQuery = mysqli_query($conn, $updateSql);
-	if ($updateQuery) {
-		// Update the session variable with the new username
-		$_SESSION['student-username'] = $newUsername;
-	
-		// Redirect only if the session is valid
-		if (isset($_SESSION['student-username'])) {
-			echo "<script>alert('Profile updated successfully!'); window.location.href='profile.php';</script>";
-			exit();
-		}
-	} else {
-		echo "<script>alert('Failed to update profile.');</script>";
-	}
+    if ($updateQuery) {
+        // Update the session variable with the new username
+        $_SESSION['student-username'] = $newUsername;
+
+        // Insert a new record into the audit_logs_user table
+        $sql = "INSERT INTO audit_logs_user (studentId, audit_logs, audit_timestamp) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        $audit_logs = "User updated their profile";
+        $audit_timestamp = date("Y-m-d H:i:s");
+        mysqli_stmt_bind_param($stmt, "iss", $_SESSION['studentId'], $audit_logs, $audit_timestamp);
+        mysqli_stmt_execute($stmt);
+
+        // Redirect only if the session is valid
+        if (isset($_SESSION['student-username'])) {
+            echo "<script>alert('Profile updated successfully!'); window.location.href='profile.php';</script>";
+            exit();
+        }
+    } else {
+        echo "<script>alert('Failed to update profile.');</script>";
+    }
 }
+?>
+<!DOCTYPE html>
+<html>
 
-$sql = "SELECT * FROM students WHERE username = '$student_name'";
-$query = mysqli_query($conn, $sql);
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Library Management</title>
+    <style type="text/css">
+        thead {
+            background-color: orange
+        }
+    </style>
+</head>
 
-// Assuming there's only one result since usernames are typically unique
-if ($row = mysqli_fetch_assoc($query)) {
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Library Management</title>
-        <style type="text/css">
-            thead{background-color: orange}
-        </style>
-    </head>
-    <body>
+<body>
     <div class="container">
         <!-- Navbar -->
         <?php include "includes/nav2.php"; ?>
@@ -107,7 +125,7 @@ if ($row = mysqli_fetch_assoc($query)) {
             </form>
         </div>
     </div>
-	<script type="text/javascript">
+    <script type="text/javascript">
         function updateProfile() {
             alert('Profile updated successfully!');
             window.location.href = 'profile.php';
@@ -115,6 +133,6 @@ if ($row = mysqli_fetch_assoc($query)) {
     </script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    </body>
-    </html>
-<?php } ?>
+</body>
+
+</html>
