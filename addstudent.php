@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 	$dept = sanitize(trim($_POST['dept']));
 	$books = sanitize(trim($_POST['num_books']));
 	$money = sanitize(trim($_POST['money_owed']));
-	$phone = sanitize(trim($_POST['email']));
+	$phone = sanitize(trim($_POST['phone']));
 	$name = sanitize(trim($_POST['name']));
 	$filename = '';
 
@@ -97,9 +97,9 @@ if (isset($_POST['submit'])) {
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="Password" class="col-sm-2 control-label">MATRIC NO</label>
+						<label for="Password" class="col-sm-2 control-label">Student Code</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="matric_no" placeholder="Matric Number" id="password" required>
+							<input type="text" class="form-control" name="matric_no" placeholder="Student Code" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">

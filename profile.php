@@ -78,7 +78,7 @@ if ($row = mysqli_fetch_assoc($query)) {
                             <td><input type="text" name="new_name" value="<?php echo $row['name']; ?>"></td>
                         </tr>
                         <tr>
-                            <td>Matric No : </td>
+                            <td>Student Code : </td>
                             <td><input type="text" name="new_matric_no" value="<?php echo $row['matric_no']; ?>"></td>
                         </tr>
                         <tr>

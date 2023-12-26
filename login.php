@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Hong_Kong');
 
 // if ((isset($_SESSION['auth']) && $_SESSION['auth'] === true)) {
 // 	header("Location: admin.php");

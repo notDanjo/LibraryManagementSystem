@@ -115,10 +115,17 @@ if (isset($_POST['del'])) {
 
 			<thead>
 				<tr>
+<<<<<<< Updated upstream
 					<th>NewsId</th>
 					<th>Announcement</th>
 
 					<th>Delete</th>
+=======
+					<th>ID</th>
+					<th>Book Name</th>
+					<th>Member Name</th>
+					<th>Student Code</th>
+>>>>>>> Stashed changes
 				</tr>
 			</thead>
 
