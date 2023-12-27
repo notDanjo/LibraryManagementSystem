@@ -25,7 +25,7 @@ if (isset($_POST['update'])) {
 
     // Handle the update logic here
     $newName = mysqli_real_escape_string($conn, $_POST['new_name']);
-    $newMatricNo = mysqli_real_escape_string($conn, $_POST['new_matric_no']);
+    $newStudentId = mysqli_real_escape_string($conn, $_POST['new_student_id']);
     $newEmail = mysqli_real_escape_string($conn, $_POST['new_email']);
     $newDept = mysqli_real_escape_string($conn, $_POST['new_dept']);
     $newPhoneNumber = mysqli_real_escape_string($conn, $_POST['new_phone_number']);
@@ -35,7 +35,7 @@ if (isset($_POST['update'])) {
     // Compare the new information with the current information and record the changes
     $changes = [];
     if ($newName != $row_current['name']) $changes[] = "name";
-    if ($newMatricNo != $row_current['matric_no']) $changes[] = "Matric No";
+    if ($newStudentId != $row_current['matric_no']) $changes[] = "Student ID";
     if ($newEmail != $row_current['email']) $changes[] = "email";
     if ($newDept != $row_current['dept']) $changes[] = "department";
     if ($newPhoneNumber != $row_current['phoneNumber']) $changes[] = "phone number";
@@ -55,7 +55,7 @@ if (isset($_POST['update'])) {
     WHERE username = ?";
 
     $stmt = mysqli_prepare($conn, $updateSql);
-    mysqli_stmt_bind_param($stmt, "ssssssss", $newName, $newMatricNo, $newEmail, $newDept, $newPhoneNumber, $newUsername, $newPassword, $student_name);
+    mysqli_stmt_bind_param($stmt, "ssssssss", $newName, $newStudentId, $newEmail, $newDept, $newPhoneNumber, $newUsername, $newPassword, $student_name);
     $updateQuery = mysqli_stmt_execute($stmt);
 
     if ($updateQuery) {
@@ -125,8 +125,8 @@ if (isset($_POST['update'])) {
                             <td><input type="text" name="new_name" value="<?php echo $row['name']; ?>"></td>
                         </tr>
                         <tr>
-                            <td>Student Code : </td>
-                            <td><input type="text" name="new_matric_no" value="<?php echo $row['matric_no']; ?>"></td>
+                            <td>Student ID : </td>
+                            <td><input type="text" name="new_student_id" value="<?php echo $row['matric_no']; ?>"></td>
                         </tr>
                         <tr>
                             <td>Email : </td>

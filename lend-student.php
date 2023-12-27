@@ -82,7 +82,7 @@ if(isset($_POST['submit'])){
 						</div>		
 					</div>
 					<div class="form-group">
-						<label for="Member Card ID" class="col-sm-2 control-label">MATRIC NO</label>
+						<label for="Member Card ID" class="col-sm-2 control-label">Student Id</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="matric" value="<?php echo $number; ?>">
 						</div>		
