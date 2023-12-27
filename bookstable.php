@@ -1,4 +1,14 @@
 <?php 
+
+session_start();
+if (isset($_SESSION['admin'])) {
+	$admin = $_SESSION['admin'];
+}
+
+if (isset($_SESSION['student-name'])) {
+	$student = $_SESSION['student-name'];
+}
+
 require 'includes/snippet.php';
 require 'includes/db-inc.php';
 include "includes/header.php";

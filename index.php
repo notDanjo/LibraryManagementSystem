@@ -1,84 +1,9 @@
 <?php
-// session_start(); 
-// session_destroy();
-// if (!(isset($_SESSION['auth']) && $_SESSION['auth'] === true)) {
-// 	header("Location: admin.php?access=false");
-// 	exit();
-// }
-// else {
-// $admin = $_SESSION['admin'];
-// }
+session_start();
+
 require 'includes/snippet.php';
 require 'includes/db-inc.php';
 include "includes/header.php";
-
-// if(isset($_SESSION['admin'])){
-// 	$admin = $_SESSION['admin'];
-// 	// echo "Hello $user";
-// }
-
-if (isset($_POST['submit'])) {
-
-	$news = sanitize(trim($_POST['news']));
-
-	$sql = "INSERT into news (announcement) values ('$news')";
-
-	$query = mysqli_query($conn, $sql);
-	$error = false;
-
-	if ($query) {
-		$error = true;
-	} else {
-		echo "<script>alert('Not successful!! Try again.');
-                    </script>";
-	}
-}
-
-if (isset($_POST['UpDat'])) {
-	$id = sanitize(trim($_POST['id']));
-	$text = sanitize(trim($_POST['text']));
-
-	$sql_up = "UPDATE news set announcement = '$text' where newsId = '$id'";
-	$result = mysqli_query($conn, $sql_del);
-	echo $result;
-	$result = mysqli_query($conn, $sql_del);
-	if ($result) {
-		echo "<script>
-            
-           
-                   alert('Update successful');
-
-         </script>";
-	}
-}
-
-if (isset($_POST['del'])) {
-
-	$id = sanitize(trim($_POST['id']));
-
-	$sql_del = "DELETE from news where newsId = $id";
-
-	$result = mysqli_query($conn, $sql_del);
-	if ($result) {
-		//            echo "<script>
-
-		//    var response = confirm('Would you like to delete the user');
-		//    if (response == true) {
-		//        alert('User was successfully deleted from the database');
-		//            location.href ='admin.php';
-		//    }   
-
-		//    else
-		//        {
-		//            alert('Could not delete user');
-		//        }
-
-
-		// </script>";
-	}
-}
-
-
 
 
 
@@ -107,7 +32,7 @@ if (isset($_POST['del'])) {
 					<div class="navbar-section">
 						<!-- Left navigation items go here -->
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">Home</a></li>
+							<li class="active"><a href="home.php">Home</a></li>
 						</ul>
 					</div>
 					<div class="navbar-header">

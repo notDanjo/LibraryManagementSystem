@@ -70,7 +70,7 @@ $counter = 1;
     </div>
 </div>
 
-<div class="container col-lg-11">
+<div class="container col-lg-11" style="padding-left: 85px;">
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
