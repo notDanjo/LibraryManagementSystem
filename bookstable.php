@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 session_start();
 require 'includes/snippet.php';
@@ -12,10 +12,22 @@ $student = isset($_SESSION['student-name']) ? $_SESSION['student-name'] : null;
 if (isset($_POST['del'])) {
     $id = sanitize(trim($_POST['id']));
 
+    // Fetch the book title before deleting the book
+    $sql_fetch = "SELECT bookTitle FROM books WHERE bookId = $id";
+    $result_fetch = mysqli_query($conn, $sql_fetch);
+    $row = mysqli_fetch_assoc($result_fetch);
+    $bookTitle = $row['bookTitle'];
+
     // Insert an audit log for the book deletion
-    $auditMessage = "Book deleted with ID: $id";
-    $sql_audit = "INSERT INTO audit_logs_books (bookId, action) VALUES ('$id', '$auditMessage')";
-    mysqli_query($conn, $sql_audit);
+    $auditMessage = "Book: $bookTitle was removed";
+    $stmt = $conn->prepare("INSERT INTO audit_logs_books (bookId, bookTitle, action) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $id, $bookTitle, $auditMessage);
+
+    if ($stmt->execute()) {
+        // Successfully inserted
+    } else {
+        // Failed to insert
+    }
 
     // Disable the foreign key check
     mysqli_query($conn, "SET FOREIGN_KEY_CHECKS=0;");
@@ -49,7 +61,7 @@ if (isset($_POST['del'])) {
             <?php if (isset($error) === true) { ?>
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <strong>Record Deleted Successfully!</strong>
+                    <strong>Book Removed Successfully!</strong>
                 </div>
             <?php } ?>
             <div class="row">
@@ -74,32 +86,32 @@ if (isset($_POST['del'])) {
                     <th>publisherName</th>
                     <th>available</th>
                     <th>categories</th>
-        			<th>Update</th>
+                    <th>Update</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <?php 
+                <?php
                 $sql = "SELECT * FROM books";
                 $query = mysqli_query($conn, $sql);
                 $counter = 1;
                 while ($row = mysqli_fetch_array($query)) { ?>
                     <tr>
-					<td><?php echo $counter++; ?></td>
-					<td><?php echo $row['bookTitle']; ?></td>
-					<td><?php echo $row['author']; ?></td>
-					<td><?php echo $row['ISBN']; ?></td>
-					<td><?php echo $row['bookCopies']; ?></td>
-					<td><?php echo $row['publisherName']; ?></td>
-					<td><?php echo $row['bookCopies'] > 0 ? 'Yes' : 'No'; ?></td>
-					<td><?php echo $row['categories']; ?></td>
+                        <td><?php echo $counter++; ?></td>
+                        <td><?php echo $row['bookTitle']; ?></td>
+                        <td><?php echo $row['author']; ?></td>
+                        <td><?php echo $row['ISBN']; ?></td>
+                        <td><?php echo $row['bookCopies']; ?></td>
+                        <td><?php echo $row['publisherName']; ?></td>
+                        <td><?php echo $row['bookCopies'] > 0 ? 'Yes' : 'No'; ?></td>
+                        <td><?php echo $row['categories']; ?></td>
 
-						<td>
-							<form method='post' action='updatebook.php'>
-								<input type='hidden' value="<?php echo $row['bookId']; ?>" name='id'>
-								<button name='update' type='submit' value='Update' class='btn btn-primary'>UPDATE</button>
-							</form>
-						</td>
+                        <td>
+                            <form method='post' action='updatebook.php'>
+                                <input type='hidden' value="<?php echo $row['bookId']; ?>" name='id'>
+                                <button name='update' type='submit' value='Update' class='btn btn-primary'>UPDATE</button>
+                            </form>
+                        </td>
                         <td>
                             <form method='post' action='bookstable.php'>
                                 <input type='hidden' value="<?php echo $row['bookId']; ?>" name='id'>
@@ -154,10 +166,10 @@ if (isset($_POST['del'])) {
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script>
-
     function Delete() {
         return confirm('Would you like to delete this book?');
     }
 </script>
 </body>
+
 </html>

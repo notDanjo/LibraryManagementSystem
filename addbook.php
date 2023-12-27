@@ -49,11 +49,17 @@ if (isset($_POST['submit'])) {
             // Get the bookId immediately after the book insertion query
             $bookId = mysqli_insert_id($conn);
 
-            $auditMessage = "Book added: $title"; // Customize the audit log message as needed
+            $auditMessage = "Book: $title was added"; // Customize the audit log message as needed
 
             // Insert the audit log into the 'audit_logs_books' table
-            $sql_audit = "INSERT INTO audit_logs_books (bookId, bookTitle, action) VALUES ('$bookId', '$title', '$auditMessage')";
-            mysqli_query($conn, $sql_audit);
+            $stmt = $conn->prepare("INSERT INTO audit_logs_books (bookId, bookTitle, action) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $bookId, $title, $auditMessage);
+
+            if ($stmt->execute()) {
+                // Successfully inserted
+            } else {
+                // Failed to insert
+            }
 
             // Log the book addition
             error_log("Book added: Title - $title, Author - $author, ISBN - $label");

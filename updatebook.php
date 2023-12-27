@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require 'includes/snippet.php';
 require 'includes/db-inc.php';
@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
     // Fetch the book details
     $sql_fetch = "SELECT * FROM books WHERE bookId = $id";
     $query_fetch = mysqli_query($conn, $sql_fetch);
-    
+
     // Check if a row is fetched
     if ($query_fetch && mysqli_num_rows($query_fetch) > 0) {
         $row = mysqli_fetch_array($query_fetch);
@@ -40,6 +40,11 @@ if (isset($_POST['submit'])) {
     $publisherName = sanitize(trim($_POST['publisherName']));
     $categories = sanitize(trim($_POST['categories']));
 
+    // Fetch the current book details
+    $sql_fetch = "SELECT * FROM books WHERE bookId = $id";
+    $query_fetch = mysqli_query($conn, $sql_fetch);
+    $oldRow = mysqli_fetch_array($query_fetch);
+
     // Update the book details
     $sql_update = "UPDATE books SET 
         bookTitle = '$bookTitle',
@@ -54,6 +59,26 @@ if (isset($_POST['submit'])) {
 
     if ($result_update) {
         $success = true;
+
+        // Prepare the audit message
+        $auditMessage = "Book $id updated: ";
+        if ($oldRow['bookTitle'] != $bookTitle) $auditMessage .= "Title changed from '" . mysqli_real_escape_string($conn, $oldRow['bookTitle']) . "' to '" . mysqli_real_escape_string($conn, $bookTitle) . "', ";
+        if ($oldRow['author'] != $author) $auditMessage .= "Author changed from '" . mysqli_real_escape_string($conn, $oldRow['author']) . "' to '" . mysqli_real_escape_string($conn, $author) . "', ";
+        if ($oldRow['ISBN'] != $ISBN) $auditMessage .= "ISBN changed from '" . mysqli_real_escape_string($conn, $oldRow['ISBN']) . "' to '" . mysqli_real_escape_string($conn, $ISBN) . "', ";
+        if ($oldRow['bookCopies'] != $bookCopies) $auditMessage .= "Book Copies changed from '" . mysqli_real_escape_string($conn, $oldRow['bookCopies']) . "' to '" . mysqli_real_escape_string($conn, $bookCopies) . "', ";
+        if ($oldRow['publisherName'] != $publisherName) $auditMessage .= "Publisher Name changed from '" . mysqli_real_escape_string($conn, $oldRow['publisherName']) . "' to '" . mysqli_real_escape_string($conn, $publisherName) . "', ";
+        if ($oldRow['categories'] != $categories) $auditMessage .= "Categories changed from '" . mysqli_real_escape_string($conn, $oldRow['categories']) . "' to '" . mysqli_real_escape_string($conn, $categories) . "', ";
+        $auditMessage = rtrim($auditMessage, ', '); // Remove the trailing comma and space
+
+        // Insert an audit log for the book update
+        $stmt = $conn->prepare("INSERT INTO audit_logs_books (bookId, bookTitle, action) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $id, $bookTitle, $auditMessage);
+
+        if ($stmt->execute()) {
+            // Successfully inserted
+        } else {
+            // Failed to insert
+        }
     }
 }
 ?>
@@ -137,4 +162,5 @@ if (isset($_POST['submit'])) {
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
+
 </html>
