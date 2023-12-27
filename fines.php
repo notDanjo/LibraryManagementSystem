@@ -17,16 +17,70 @@ include "includes/header.php";
 if (isset($_POST['del'])) {
 	$id = trim($_POST['del-btn']);
 	$msg = "Paid";
-	$sql = "UPDATE borrow set `fine` = '$msg' where borrowId = '$id'";
-	$query = mysqli_query($conn, $sql);
+
+	// Get the bookName and bookId from the borrow table
+	$sql = "SELECT bookName, bookId FROM borrow WHERE borrowId = ?";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $id);
+	mysqli_stmt_execute($stmt);
+	$result = mysqli_stmt_get_result($stmt);
+	if (!$result) {
+		die('Error: ' . mysqli_error($conn));
+	}
+	$row = mysqli_fetch_assoc($result);
+	$bookName = mysqli_real_escape_string($conn, $row['bookName']);
+	$bookId = $row['bookId'];
+
+	// Increase the bookCopies in the books table
+	$sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookTitle = ? AND bookId = ?";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "ss", $bookName, $bookId);
+	mysqli_stmt_execute($stmt);
+
+	// Define the userName variable
+	if (isset($_SESSION['admin'])) {
+		$userName = mysqli_real_escape_string($conn, $_SESSION['admin']);
+	} else {
+		$userName = "Unknown user";
+	}
+
+	// Insert the return into the audit_logs_borrow table
+	$action = "Book '$bookName' returned by admin '$userName'";
+	$sql = "INSERT INTO audit_logs_borrow (borrowId, action, audit_timestamp) VALUES (?, ?, CURRENT_TIMESTAMP)";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "ss", $id, $action);
+	mysqli_stmt_execute($stmt);
+
+	// Disable foreign key checks
+	$sql = "SET FOREIGN_KEY_CHECKS = 0";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_execute($stmt);
+
+	// Delete the record from the borrow table
+	$sql = "DELETE FROM borrow WHERE borrowId = ?";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $id);
+	mysqli_stmt_execute($stmt);
+
+	// Enable foreign key checks
+	$sql = "SET FOREIGN_KEY_CHECKS = 1";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_execute($stmt);
+
+	// Insert the deletion into the audit_logs_borrow table
+	$action = "Book '$bookName' deleted by admin '$userName'";
+	$sql = "INSERT INTO audit_logs_borrow (borrowId, action, audit_timestamp) VALUES (?, ?, CURRENT_TIMESTAMP)";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "ss", $id, $action);
+	mysqli_stmt_execute($stmt);
+
 	$error = false;
-	if ($query) {
+	if ($stmt) {
 		$error = true;
 	}
 }
 
 ?>
-
 
 <div class="container">
 	<?php include "includes/nav.php"; ?>
@@ -50,7 +104,7 @@ if (isset($_POST['del'])) {
 				</div>
 			<?php } ?>
 			<div class="row">
-				
+
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
 					<!-- <form >
 			  		<div class="input-group pull-right">
