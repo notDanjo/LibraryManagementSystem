@@ -49,7 +49,7 @@ include "includes/header.php";
 					<th>NewsId</th>
 					<th>Announcement</th>
 
-					<th>Delete</th>
+					<th>Name</th>
 
 					<th>ID</th>
 					<th>Book Name</th>

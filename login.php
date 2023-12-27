@@ -52,11 +52,12 @@ if (isset($_POST['submit'])) {
 
 			// Insert audit log for successful admin login
 			$adminId = $row['adminId'];
-			$logMessage = "Admin $adminId logged in";
+			$adminName = $row['username'];
+			$logMessage = "Admin $adminId ($adminName) logged in";
 			$auditTimestamp = date("Y-m-d H:i:s");
 
 			$stmt = $conn->prepare("INSERT INTO audit_logs_admin (adminId, audit_logs, audit_timestamp) 
-                        VALUES (?, ?, ?)");
+			VALUES (?, ?, ?)");
 			$stmt->bind_param("sss", $adminId, $logMessage, $auditTimestamp);
 			$stmt->execute();
 		}
@@ -83,11 +84,12 @@ if (isset($_POST['submit'])) {
 
 				// Insert audit log for successful student login
 				$studentId = $row['studentId'];
-				$logMessage = "Student $studentId logged in";
-				$auditTimestamp = date("Y-m-d H:i:s");
+				$studentUsername = $row['username'];
+				$logMessage = "Student $studentId ($studentUsername) logged in";
+				$auditTimestamp = date("Y-m-d H:i:s"); // Use 24-hour format
 
 				$stmt = $conn->prepare("INSERT INTO audit_logs_user (studentId, audit_logs, audit_timestamp) 
-                        VALUES (?, ?, ?)");
+            	VALUES (?, ?, ?)");
 				$stmt->bind_param("sss", $studentId, $logMessage, $auditTimestamp);
 				$stmt->execute();
 

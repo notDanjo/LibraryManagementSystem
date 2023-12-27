@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Asia/Hong_Kong');
+
 require 'includes/db-inc.php';
 $student_name = $_SESSION['student-username'];
 
@@ -16,6 +18,11 @@ if ($result = mysqli_fetch_assoc($query)) {
 }
 
 if (isset($_POST['update'])) {
+    // Fetch the current user's information
+    $sql_current = "SELECT * FROM students WHERE username = '$student_name'";
+    $query_current = mysqli_query($conn, $sql_current);
+    $row_current = mysqli_fetch_assoc($query_current);
+
     // Handle the update logic here
     $newName = mysqli_real_escape_string($conn, $_POST['new_name']);
     $newMatricNo = mysqli_real_escape_string($conn, $_POST['new_matric_no']);
@@ -25,26 +32,48 @@ if (isset($_POST['update'])) {
     $newUsername = mysqli_real_escape_string($conn, $_POST['new_username']);
     $newPassword = mysqli_real_escape_string($conn, $_POST['new_password']);
 
-    $updateSql = "UPDATE students SET
-        name = '$newName',
-        matric_no = '$newMatricNo',
-        email = '$newEmail',
-        dept = '$newDept',
-        phoneNumber = '$newPhoneNumber',
-        username = '$newUsername',
-        password = '$newPassword'
-        WHERE username = '$student_name'";
+    // Compare the new information with the current information and record the changes
+    $changes = [];
+    if ($newName != $row_current['name']) $changes[] = "name";
+    if ($newMatricNo != $row_current['matric_no']) $changes[] = "Matric No";
+    if ($newEmail != $row_current['email']) $changes[] = "email";
+    if ($newDept != $row_current['dept']) $changes[] = "department";
+    if ($newPhoneNumber != $row_current['phoneNumber']) $changes[] = "phone number";
+    if ($newUsername != $row_current['username']) $changes[] = "username";
+    if ($newPassword != $row_current['password']) $changes[] = "password";
 
-    $updateQuery = mysqli_query($conn, $updateSql);
+    $audit_logs = "User updated their " . implode(", ", $changes) . " in their profile.";
+
+    $updateSql = "UPDATE students SET
+    name = ?,
+    matric_no = ?,
+    email = ?,
+    dept = ?,
+    phoneNumber = ?,
+    username = ?,
+    password = ?
+    WHERE username = ?";
+
+    $stmt = mysqli_prepare($conn, $updateSql);
+    mysqli_stmt_bind_param($stmt, "ssssssss", $newName, $newMatricNo, $newEmail, $newDept, $newPhoneNumber, $newUsername, $newPassword, $student_name);
+    $updateQuery = mysqli_stmt_execute($stmt);
+
     if ($updateQuery) {
         // Update the session variable with the new username
         $_SESSION['student-username'] = $newUsername;
 
+        // Fetch the updated user's information
+        $sql = "SELECT * FROM students WHERE username = '$newUsername'";
+        $query = mysqli_query($conn, $sql);
+        if ($result = mysqli_fetch_assoc($query)) {
+            $row = $result;
+            $_SESSION['studentId'] = $row['studentId'];
+        }
+
         // Insert a new record into the audit_logs_user table
         $sql = "INSERT INTO audit_logs_user (studentId, audit_logs, audit_timestamp) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($conn, $sql);
-        $audit_logs = "User updated their profile";
-        $audit_timestamp = date("Y-m-d H:i:s");
+        $audit_timestamp = date("Y-m-d h:i:s A");
         mysqli_stmt_bind_param($stmt, "iss", $_SESSION['studentId'], $audit_logs, $audit_timestamp);
         mysqli_stmt_execute($stmt);
 
