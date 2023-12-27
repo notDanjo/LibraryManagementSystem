@@ -1,16 +1,12 @@
 <?php 
-	$host = "localhost";
-	$user = "root";
-	$pass = "";
-	$db = "library_db";
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "library_db";
 
-	$conn = mysqli_connect($host, $user, $pass, $db);
+$conn = mysqli_connect($host, $user, $pass, $db);
 
-	// if ($conn) {
-	// 	echo "Successful";
-	// }
-	// else
-	// {
-	// 	echo "Check your Db connection";
-	// }
-
+// Check connection
+if (!$conn) {
+	die("Connection failed: " . mysqli_connect_error());
+}

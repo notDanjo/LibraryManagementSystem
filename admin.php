@@ -46,13 +46,11 @@ include "includes/header.php";
 			<thead>
 				<tr>
 
+
 					<th>IDs</th>
 					<th>Book Title</th>
 					<th>User</th>
 					<th>Student ID</th>
-
-
-
 				</tr>
 			</thead>
 			<?php

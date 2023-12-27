@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 require 'includes/snippet.php';
 require 'includes/db-inc.php';
@@ -153,6 +154,7 @@ if (isset($_POST['del'])) {
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script>
+
     function Delete() {
         return confirm('Would you like to delete this book?');
     }

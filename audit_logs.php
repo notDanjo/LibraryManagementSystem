@@ -24,16 +24,17 @@ $results_per_page = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $results_per_page;
 
-$sql_admin = "SELECT audit_logs_admin.*, admin.adminName FROM audit_logs_admin JOIN admin ON audit_logs_admin.adminId = admin.adminId WHERE (admin.adminName LIKE '%" . $search_query . "%' OR audit_logs_admin.audit_logs LIKE '%" . $search_query . "%' OR audit_logs_admin.audit_id LIKE '%" . $search_query . "%' OR audit_logs_admin.adminId LIKE '%" . $search_query . "%') ORDER BY $sort_admin $direction LIMIT $start, $results_per_page";
+$sql_admin = "SELECT audit_logs_admin.*, admin.adminName FROM audit_logs_admin JOIN admin ON audit_logs_admin.adminId = admin.adminId WHERE (admin.adminName LIKE '%" . $search_query . "%' OR audit_logs_admin.audit_logs LIKE '%" . $search_query . "%' OR audit_logs_admin.audit_id LIKE '%" . $search_query . "%' OR audit_logs_admin.adminId LIKE '%" . $search_query . "%') ORDER BY audit_logs_admin.audit_timestamp DESC, $sort_admin $direction LIMIT $start, $results_per_page";
 $query_admin = mysqli_query($conn, $sql_admin);
 
-$sql_user = "SELECT audit_logs_user.*, students.name FROM audit_logs_user JOIN students ON audit_logs_user.studentId = students.studentId WHERE (students.name LIKE '%" . $search_query . "%' OR audit_logs_user.audit_logs LIKE '%" . $search_query . "%' OR audit_logs_user.audit_id LIKE '%" . $search_query . "%' OR audit_logs_user.studentId LIKE '%" . $search_query . "%') ORDER BY $sort_user $direction LIMIT $start, $results_per_page";
+$sql_user = "SELECT audit_logs_user.*, students.name FROM audit_logs_user JOIN students ON audit_logs_user.studentId = students.studentId WHERE (students.name LIKE '%" . $search_query . "%' OR audit_logs_user.audit_logs LIKE '%" . $search_query . "%' OR audit_logs_user.audit_id LIKE '%" . $search_query . "%' OR audit_logs_user.studentId LIKE '%" . $search_query . "%') ORDER BY audit_logs_user.audit_id DESC, audit_logs_user.audit_timestamp DESC LIMIT $start, $results_per_page";
 $query_user = mysqli_query($conn, $sql_user);
 
-$sql_books = "SELECT audit_logs_books.*, books.bookTitle FROM audit_logs_books JOIN books ON audit_logs_books.bookId = books.bookId WHERE (books.bookTitle LIKE '%" . $search_query . "%' OR audit_logs_books.action LIKE '%" . $search_query . "%' OR audit_logs_books.auditId_books LIKE '%" . $search_query . "%' OR audit_logs_books.bookId LIKE '%" . $search_query . "%') ORDER BY $sort_books $direction LIMIT $start, $results_per_page";
+$sql_books = "SELECT audit_logs_books.*, DATE_FORMAT(audit_logs_books.audit_timestamp, '%Y-%m-%d %r') as formatted_timestamp FROM audit_logs_books ORDER BY audit_logs_books.audit_timestamp DESC LIMIT $start, $results_per_page";
 $query_books = mysqli_query($conn, $sql_books);
 
-$sql_borrow = "SELECT audit_logs_borrow.*, borrow.memberName, borrow.bookName FROM audit_logs_borrow JOIN borrow ON audit_logs_borrow.borrowId = borrow.borrowId WHERE (borrow.memberName LIKE '%" . $search_query . "%' OR borrow.bookName LIKE '%" . $search_query . "%' OR audit_logs_borrow.action LIKE '%" . $search_query . "%' OR audit_logs_borrow.auditId_borrow LIKE '%" . $search_query . "%' OR audit_logs_borrow.borrowId LIKE '%" . $search_query . "%') ORDER BY $sort_borrow $direction LIMIT $start, $results_per_page";
+
+$sql_borrow = "SELECT audit_logs_borrow.*, borrow.memberName, borrow.bookName FROM audit_logs_borrow JOIN borrow ON audit_logs_borrow.borrowId = borrow.borrowId WHERE (borrow.memberName LIKE '%" . $search_query . "%' OR borrow.bookName LIKE '%" . $search_query . "%' OR audit_logs_borrow.action LIKE '%" . $search_query . "%' OR audit_logs_borrow.auditId_borrow LIKE '%" . $search_query . "%' OR audit_logs_borrow.borrowId LIKE '%" . $search_query . "%') ORDER BY audit_logs_borrow.audit_timestamp DESC, $sort_borrow $direction LIMIT $start, $results_per_page";
 $query_borrow = mysqli_query($conn, $sql_borrow);
 
 ?>
@@ -57,13 +58,17 @@ $query_borrow = mysqli_query($conn, $sql_borrow);
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = mysqli_fetch_array($query_admin)) { ?>
+            <?php while ($row = mysqli_fetch_array($query_admin)) {
+                // Format the audit_timestamp in 12-hour format
+                $auditTimestamp = date_create($row['audit_timestamp']);
+                $auditTimestampFormatted = date_format($auditTimestamp, 'Y-m-d h:i:s A');
+            ?>
                 <tr>
                     <td><?php echo $row['audit_id']; ?></td>
                     <td><?php echo $row['adminId']; ?></td>
                     <td><?php echo $row['adminName']; ?></td>
                     <td><?php echo $row['audit_logs']; ?></td>
-                    <td><?php echo $row['audit_timestamp']; ?></td>
+                    <td><?php echo $auditTimestampFormatted; ?></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -92,13 +97,16 @@ $query_borrow = mysqli_query($conn, $sql_borrow);
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = mysqli_fetch_array($query_user)) { ?>
+            <?php while ($row = mysqli_fetch_array($query_user)) {
+                // Format the audit_timestamp in 12-hour format
+                $auditTimestamp = date_create($row['audit_timestamp']);
+                $auditTimestampFormatted = date_format($auditTimestamp, 'Y-m-d h:i:s A'); ?>
                 <tr>
                     <td><?php echo $row['audit_id']; ?></td>
                     <td><?php echo $row['studentId']; ?></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['audit_logs']; ?></td>
-                    <td><?php echo $row['audit_timestamp']; ?></td>
+                    <td><?php echo $auditTimestampFormatted; ?></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -127,13 +135,16 @@ $query_borrow = mysqli_query($conn, $sql_borrow);
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = mysqli_fetch_array($query_books)) { ?>
+            <?php while ($row = mysqli_fetch_array($query_books)) {
+                // Format the audit_timestamp in 12-hour format
+                $auditTimestamp = date_create($row['audit_timestamp']);
+                $auditTimestampFormatted = date_format($auditTimestamp, 'Y-m-d h:i:s A'); ?>
                 <tr>
                     <td><?php echo $row['auditId_books']; ?></td>
                     <td><?php echo $row['bookId']; ?></td>
-                    <td><?php echo $row['bookTitle']; ?></td>
+                    <td><?php echo $row['bookTitle'] ? $row['bookTitle'] : 'Removed Book'; ?></td>
                     <td><?php echo $row['action']; ?></td>
-                    <td><?php echo $row['audit_timestamp']; ?></td>
+                    <td><?php echo $auditTimestampFormatted; ?></td>
                 </tr>
             <?php } ?>
         </tbody>
