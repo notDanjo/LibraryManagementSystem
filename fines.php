@@ -35,7 +35,7 @@ if (isset($_POST['del'])) {
 	<div class="alert alert-warning col-lg-7 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-0 col-sm-offset-1 col-xs-offset-0" style="margin-top:70px">
 
 		<span class="glyphicon glyphicon-book"></span>
-		<strong>Fines</strong> Table
+		<strong>Borrowed Books</strong> Table
 	</div>
 
 </div>

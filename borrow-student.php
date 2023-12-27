@@ -24,6 +24,7 @@ include "includes/header.php";
 					<th>ID</th>
 					<th>BOOK</th>
 					<th>AVAILABLE COPIES</th>
+					<th>AVAILABLE</th>
 					<th>BORROW</th>
 				</tr>
 			</thead>
@@ -34,15 +35,20 @@ include "includes/header.php";
 				$counter = 1;
 				while ($row = mysqli_fetch_array($query)) {
 					?>
-					<tr>
-						<td><?php echo $counter++; ?></td>
-						<td><?php echo $row['bookTitle']; ?></td>
-						<td><?php echo $row['bookCopies']; ?></td>
-						<td>
-							<a href="lend-student.php?bid=<?php echo $row['bookId'] ?>" class="btn btn-success">Borrow Now</a>
-						</td>
-					</tr>
-				<?php } ?>
+						<tr>
+							<td><?php echo $counter++; ?></td>
+							<td><?php echo $row['bookTitle']; ?></td>
+							<td><?php echo $row['bookCopies']; ?></td>
+							<td><?php echo $row['bookCopies'] > 0 ? 'Yes' : 'No'; ?></td>
+							<td>
+								<?php if($row['bookCopies'] > 0) { ?>
+									<a href="lend-student.php?bid=<?php echo $row['bookId'] ?>" class="btn btn-success">Borrow Now</a>
+								<?php } else { ?>
+									<span class="btn btn-default" disabled>Borrow Now</span>
+								<?php } ?>
+							</td>
+						</tr>
+					<?php } ?>
 			</tbody>
 		</table>
 	</div>
