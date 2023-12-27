@@ -51,7 +51,7 @@ if (isset($_POST['del'])) {
 				</div>
 			<?php } ?>
 			<div class="row">
-				<a href="adduser.php"><button class="btn btn-success col-lg-3 col-md-4 col-sm-11 col-xs-11 button" style="margin-left: 15px;margin-bottom: 5px"><span class="glyphicon glyphicon-plus-sign"></span> Add User</button></a>
+				<a href="adduser.php"><button class="btn btn-success col-lg-3 col-md-4 col-sm-11 col-xs-11 button" style="margin-left: 15px;margin-bottom: 5px"><span class="glyphicon glyphicon-plus-sign"></span> Add Admin</button></a>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
 					<!-- <form action="users.php" method="post" enctype="multipart / form-data">
 			  		<div class="input-group pull-right">
