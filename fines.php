@@ -50,7 +50,7 @@ if (isset($_POST['del'])) {
 				</div>
 			<?php } ?>
 			<div class="row">
-				<a><button class="btn btn-success col-lg-3 col-md-4 col-sm-11 col-xs-11 button" style="margin-left: 15px;margin-bottom: 5px"> Fines</button></a>
+				
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
 					<!-- <form >
 			  		<div class="input-group pull-right">
@@ -74,7 +74,7 @@ if (isset($_POST['del'])) {
 					<th>Book Name</th>
 					<th>Borrow date</th>
 					<th>Return Date</th>
-					<th>Overdue Charges</th>
+					<th>Status</th>
 					<th>ACTION</th>
 				</tr>
 			</thead>
@@ -97,7 +97,7 @@ if (isset($_POST['del'])) {
 						<td>
 							<form action="fines.php" method="post">
 								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
-								<button class="btn btn-warning" name="del">STOP COUNT</button>
+								<button class="btn btn-warning" name="del">Return</button>
 							</form>
 						</td>
 					</tr>

@@ -15,21 +15,30 @@ if(isset($_POST['submit'])){
     $bqry = mysqli_query($conn,"SELECT * FROM books where bookId = {$bid} ");
     $bdata = mysqli_fetch_array($bqry);
 
-    $sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid')";
-    $query_borrow = mysqli_query($conn, $sql_borrow);
+    // Check if the book is available
+    if ($bdata['bookCopies'] > 0) {
+        $sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid')";
+        $query_borrow = mysqli_query($conn, $sql_borrow);
 
-    if($query_borrow){
-        // Retrieve the borrowId after inserting the borrow record
-        $borrowId = mysqli_insert_id($conn);
+        if($query_borrow){
+            // Retrieve the borrowId after inserting the borrow record
+            $borrowId = mysqli_insert_id($conn);
 
-        // Insert audit log for successful borrow
-        $auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";
-        $sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action) VALUES ('$borrowId', '$auditMessage')";
-        mysqli_query($conn, $sql_audit);
+            // Insert audit log for successful borrow
+            $auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";
+            $sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action) VALUES ('$borrowId', '$auditMessage')";
+            mysqli_query($conn, $sql_audit);
 
-        echo "<script>alert('Record Added Successfully!');</script>";
+            // Decrease the book count by 1
+            $newBookCount = $bdata['bookCopies'] - 1;
+            mysqli_query($conn, "UPDATE books SET bookCopies = {$newBookCount} WHERE bookId = {$bid}");
+
+            echo "<script>alert('Record Added Successfully!');</script>";
+        } else {
+            echo "<script>alert('Unsuccessful');</script>";
+        }
     } else {
-        echo "<script>alert('Unsuccessful');</script>";
+        echo "<script>alert('Book Not Available at the moment');</script>";
     }
 }
 	
