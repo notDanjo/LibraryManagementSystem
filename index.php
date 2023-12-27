@@ -32,7 +32,7 @@ include "includes/header.php";
 					<div class="navbar-section">
 						<!-- Left navigation items go here -->
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="home.php">Home</a></li>
+							<li class="active"><a href="index.php">Home</a></li>
 						</ul>
 					</div>
 					<div class="navbar-header">
