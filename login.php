@@ -29,16 +29,23 @@ if (isset($_POST['submit'])) {
 	$username = sanitize(trim($_POST['username']));
 	$password = sanitize(trim($_POST['password']));
 
-	// Query to check the admin credentials in the 'admin' table
-	$sql_admin = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
-	$query = mysqli_query($conn, $sql_admin);
+	// Validate username and password
+	if (empty($username) || empty($password)) {
+		die("Username and password must not be empty");
+	}
+
+	// Use prepared statements to prevent SQL injection
+	$stmt = $conn->prepare("SELECT * FROM admin WHERE username = ? AND password = ?");
+	$stmt->bind_param("ss", $username, $password);
+	$stmt->execute();
+	$query = $stmt->get_result();
 
 	// Uncomment the line below to check for any database errors
 	// echo mysqli_error($conn);
 
 	// Check if there is at least one row in the result set (admin credentials are correct)
-	if (mysqli_num_rows($query) > 0) {
-		while ($row = mysqli_fetch_assoc($query)) {
+	if ($query->num_rows > 0) {
+		while ($row = $query->fetch_assoc()) {
 			// Set session variables for authentication
 			$_SESSION['auth'] = true;
 			$_SESSION['admin'] = $row['username'];
@@ -48,9 +55,10 @@ if (isset($_POST['submit'])) {
 			$logMessage = "Admin $adminId logged in";
 			$auditTimestamp = date("Y-m-d H:i:s");
 
-			$sql_insert_log = "INSERT INTO audit_logs_admin (adminId, audit_logs, audit_timestamp) 
-                               VALUES ('$adminId', '$logMessage', '$auditTimestamp')";
-			mysqli_query($conn, $sql_insert_log);
+			$stmt = $conn->prepare("INSERT INTO audit_logs_admin (adminId, audit_logs, audit_timestamp) 
+                        VALUES (?, ?, ?)");
+			$stmt->bind_param("sss", $adminId, $logMessage, $auditTimestamp);
+			$stmt->execute();
 		}
 
 		// If authentication is successful, redirect to the admin.php page
@@ -60,30 +68,32 @@ if (isset($_POST['submit'])) {
 		}
 	} else {
 		// If admin credentials are not valid, check student credentials in the 'students' table
-		$sql_stud = "SELECT * FROM students WHERE username='$username' AND password = '$password'";
-		$query = mysqli_query($conn, $sql_stud);
-
-		// Fetch the first row from the result set
-		$row = mysqli_fetch_assoc($query);
+		$stmt = $conn->prepare("SELECT * FROM students WHERE username = ? AND password = ?");
+		$stmt->bind_param("ss", $username, $password);
+		$stmt->execute();
+		$query = $stmt->get_result();
 
 		// Check if there is at least one row in the result set (student credentials are correct)
-		if (mysqli_num_rows($query) > 0) {
-			// Set session variables for the authenticated student
-			$_SESSION['student-username'] = $row['username'];
-			$_SESSION['student-name'] = $row['name'];
-			$_SESSION['student-matric'] = $row['matric_no'];
+		if ($query->num_rows > 0) {
+			while ($row = $query->fetch_assoc()) {
+				// Set session variables for the authenticated student
+				$_SESSION['student-username'] = $row['username'];
+				$_SESSION['student-name'] = $row['name'];
+				$_SESSION['student-matric'] = $row['matric_no'];
 
-			// Insert audit log for successful student login
-			$studentId = $row['studentId'];
-			$logMessage = "Student $studentId logged in";
-			$auditTimestamp = date("Y-m-d H:i:s");
+				// Insert audit log for successful student login
+				$studentId = $row['studentId'];
+				$logMessage = "Student $studentId logged in";
+				$auditTimestamp = date("Y-m-d H:i:s");
 
-			$sql_insert_log = "INSERT INTO audit_logs_user (studentId, audit_logs, audit_timestamp) 
-							   VALUES ('$studentId', '$logMessage', '$auditTimestamp')";
-			mysqli_query($conn, $sql_insert_log);
+				$stmt = $conn->prepare("INSERT INTO audit_logs_user (studentId, audit_logs, audit_timestamp) 
+                        VALUES (?, ?, ?)");
+				$stmt->bind_param("sss", $studentId, $logMessage, $auditTimestamp);
+				$stmt->execute();
 
-			// Redirect to the studentportal.php page
-			header("Location: studentportal.php");
+				// Redirect to the studentportal.php page
+				header("Location: studentportal.php");
+			}
 		} else {
 			// Display an error message if student credentials are invalid
 			echo "<div class='alert alert-success alert-dismissable'>
