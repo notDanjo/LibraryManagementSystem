@@ -45,10 +45,19 @@ include "includes/header.php";
 		<table class="table table-bordered">
 			<thead>
 				<tr>
+
+					<th>NewsId</th>
+					<th>Announcement</th>
+
+					<th>Delete</th>
+
 					<th>ID</th>
 					<th>Book Name</th>
 					<th>Member Name</th>
-					<th>Matric Number</th>
+					<th>Student Code</th>
+
+
+
 				</tr>
 			</thead>
 			<?php

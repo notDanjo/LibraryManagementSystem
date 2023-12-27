@@ -52,21 +52,21 @@
 			<div class="carousel" data-flickity='{ "autoPlay": true }' ;>
 
 				<div class="carousel-cell" auto-play>
-					<img src="images/header-bg.jpg">
+					<img src="images/header-bg.png">
 				</div>
 				<div class="carousel-cell" auto-play>
-					<img src="images/header-bg.jpg">
+					<img src="images/header-bg.png">
 
 				</div>
 				<div class="carousel-cell" auto-play>
-					<img src="images/header-bg.jpg">
+					<img src="images/header-bg.png">
 				</div>
 
 				<div class="carousel-cell" auto-play>
-					<img src="images/header-bg.jpg">
+					<img src="images/header-bg.png">
 				</div>
 				<div class="carousel-cell" auto-play>
-					<img src="images/header-bg.jpg">
+					<img src="images/header-bg.png">
 				</div>
 
 			</div>
@@ -76,7 +76,7 @@
 		</div>
 	</div>
 
-	<div class="container slide2">
+	<!-- <div class="container slide2">
 
 		<div class="row">
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
@@ -89,10 +89,6 @@
 				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-				<a href="#">
-					<p class="slide2"><button class="btn btn-success">Sign Up</button></p>
-				</a>
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 column">
 				<div class="page-header col-lg-offset-1">
@@ -117,7 +113,7 @@
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="container-fluid slide3" style="background-color: #282828">
 		<div class="container">
@@ -148,7 +144,7 @@
 	</div>
 	<div class="container_fluid">
 		<p class="page-header center-block">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			Our Library Management System
 
 		</p>
 		<p class="page-header center-block">

@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+date_default_timezone_set('Asia/Hong_Kong');
+
 if (!isset($_SESSION['admin'])) {
     header("Location: login.php"); // Redirect to login page if the user is not an admin
     exit();

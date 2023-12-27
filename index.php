@@ -64,7 +64,7 @@ include "includes/header.php";
 					<img src="ify/1.jpeg">
 				</div>
 				<div class="carousel-cell" auto-play>
-					<img src="ify/2.jpeg">
+					<img src="ify/2.png">
 
 				</div>
 				<div class="carousel-cell" auto-play>

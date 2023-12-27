@@ -82,7 +82,7 @@ $counter = 1;
                 <tr>
                     <th>ID</th>
                     <th>Student Name</th>
-                    <th>Matric No</th>
+                    <th>Student Code</th>
                     <th>Email</th>
                     <th>Department</th>
                     <th>Phone No.</th>

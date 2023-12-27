@@ -70,7 +70,7 @@ if (isset($_POST['del'])) {
 				<tr>
 					<th>ID</th>
 					<th>Member Name</th>
-					<th>Matric Number</th>
+					<th>Student Code</th>
 					<th>Book Name</th>
 					<th>Borrow date</th>
 					<th>Return Date</th>
