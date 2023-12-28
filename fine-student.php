@@ -60,7 +60,11 @@ if(isset($_POST['del'])){
 	<div class="alert alert-warning col-lg-7 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-0 col-sm-offset-1 col-xs-offset-0" style="margin-top:70px">
 
 		<span class="glyphicon glyphicon-book"></span>
+<<<<<<< Updated upstream
 	    <strong>Transaction</strong> Table
+=======
+	    <strong>Transactions</strong> Table
+>>>>>>> Stashed changes
 	</div>
 
 	</div>
@@ -109,7 +113,11 @@ if(isset($_POST['del'])){
 		             <td><?php echo $row['bookName']; ?></td>
 		             <td><?php echo $row['borrowDate']; ?></td>
 		             <td><?php echo $row['returnDate']; ?></td>
+<<<<<<< Updated upstream
 		             <td><?php echo $row['Status']; ?></td> <!-- Display the Status column -->
+=======
+		             <td><?php echo $row['Status']; ?></td>
+>>>>>>> Stashed changes
 		            </tr> 
 		            <?php } ?> 
 		         </tbody> 

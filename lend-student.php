@@ -14,6 +14,7 @@ if(isset($_POST['submit']))
     $due = trim($_POST['dueDate']);
 
 	// Validation
+<<<<<<< Updated upstream
 	if (empty($bid) || empty($bdate) || empty($due)) 
 	{
 		echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
@@ -23,15 +24,28 @@ if(isset($_POST['submit']))
 // Validation
     $bqry = mysqli_query($conn,"SELECT * FROM books where bookId = {$bid} ");
     $bdata = mysqli_fetch_array($bqry);
+=======
+    if (empty($bid) || $bid == 'SELECT BOOK' || empty($bdate) || empty($due)) {
+        echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
+        return;
+    }
+>>>>>>> Stashed changes
 
     // Check if the book is available
     if ($bdata['bookCopies'] > 0) {
 		$sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId, Status) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid', 'Pending')";
         $query_borrow = mysqli_query($conn, $sql_borrow);
 
+<<<<<<< Updated upstream
         if($query_borrow){
             // Retrieve the borrowId after inserting the borrow record
             $borrowId = mysqli_insert_id($conn);
+=======
+	// Check if the book is available
+	if ($bdata['bookCopies'] > 0) {
+		$sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId, Status) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid', 'Pending For Approval')";
+		$query_borrow = mysqli_query($conn, $sql_borrow);
+>>>>>>> Stashed changes
 
             // Insert audit log for successful borrow
             $auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";

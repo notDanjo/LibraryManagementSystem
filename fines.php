@@ -27,6 +27,53 @@ if (isset($_POST['del'])) {
 
 ?>
 
+<<<<<<< Updated upstream
+=======
+<?php
+if (isset($_POST['reject'])) {
+    $id = trim($_POST['del-btn']);
+
+    // Get the bookId from the borrow table
+    $sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $bookId = $row['bookId'];
+
+    // Increase the bookCopies in the books table
+    $sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $bookId);
+    mysqli_stmt_execute($stmt);
+
+    // Delete the associated records from the audit_logs_borrow table
+	$sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $id);
+	mysqli_stmt_execute($stmt);
+
+	// Delete the record from the borrow table
+	$sql = "DELETE FROM borrow WHERE borrowId = ?";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $id);
+	mysqli_stmt_execute($stmt);
+}
+
+if (isset($_POST['confirm'])) {
+    $id = trim($_POST['del-btn']);
+
+    // Update the status in the borrow table
+    $sql = "UPDATE borrow SET Status = 'Confirmed' WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+}
+
+// ...
+?>
+>>>>>>> Stashed changes
 
 <div class="container">
 	<?php include "includes/nav.php"; ?>
@@ -93,7 +140,15 @@ if (isset($_POST['del'])) {
 						<td><?php echo $row['bookName']; ?></td>
 						<td><?php echo $row['borrowDate']; ?></td>
 						<td><?php echo $row['returnDate']; ?></td>
-						<td><?php echo $row['fine']; ?></td>
+						<td><?php echo $row['Status']; ?></td>
+						<td>
+							<form action="fines.php" method="post" onsubmit="return confirmAction(this);">
+								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
+								<button class="btn btn-danger" name="reject" <?php echo $row['Status'] == 'Confirmed' ? 'disabled' : ''; ?>>Reject</button>
+								<button class="btn btn-success" name="confirm" <?php echo $row['Status'] == 'Confirmed' ? 'disabled' : ''; ?>>Confirm</button>
+							</form>
+						</td>
+
 						<td>
 							<form action="fines.php" method="post">
 								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
@@ -153,10 +208,12 @@ if (isset($_POST['del'])) {
 	</div>
 </div>
 
-
-
-
-
+<script>
+function confirmAction(form) {
+    var action = form.querySelector('[name=reject]') ? 'Reject' : 'Confirm';
+    return confirm('Are you sure you want to ' + action + ' this record?');
+}
+</script>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
