@@ -15,11 +15,71 @@ include "includes/header.php";
 
 
 if (isset($_POST['del'])) {
-	$id = trim($_POST['del-btn']);
-	$msg = "Paid";
+    $id = trim($_POST['del-btn']);
+    $msg = "Paid";
 
-	// Get the bookName, bookId, and memberName from the borrow table
-	$sql = "SELECT bookName, bookId, memberName FROM borrow WHERE borrowId = ?";
+    // Get the bookId from the borrow table
+    $sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $bookId = $row['bookId'];
+
+    // Increase the bookCopies in the books table
+    $sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $bookId);
+    mysqli_stmt_execute($stmt);
+
+    // Update the fine status in the borrow table
+    $sql = "UPDATE borrow SET `fine` = ? WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ss", $msg, $id);
+    mysqli_stmt_execute($stmt);
+
+    // Delete the associated records from the audit_logs_borrow table
+    $sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+
+    // Delete the record from the borrow table
+    $sql = "DELETE FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+
+    $error = false;
+    if ($stmt) {
+        $error = true;
+    }
+}
+
+?>
+
+<?php
+if (isset($_POST['reject'])) {
+    $id = trim($_POST['del-btn']);
+
+    // Get the bookId from the borrow table
+    $sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $bookId = $row['bookId'];
+
+    // Increase the bookCopies in the books table
+    $sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $bookId);
+    mysqli_stmt_execute($stmt);
+
+    // Delete the associated records from the audit_logs_borrow table
+	$sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
 	$stmt = mysqli_prepare($conn, $sql);
 	mysqli_stmt_bind_param($stmt, "s", $id);
 	mysqli_stmt_execute($stmt);
@@ -156,10 +216,10 @@ if (isset($_POST['del'])) {
 						<td><?php echo $row['returnDate']; ?></td>
 						<td><?php echo $row['fine']; ?></td>
 						<td>
-							<form action="fines.php" method="post">
-								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
-								<button class="btn btn-warning" name="del">Return</button>
-							</form>
+						<form action="fines.php" method="post">
+							<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
+							<button class="btn btn-warning" name="del">Return</button>
+						</form>
 						</td>
 					</tr>
 				<?php } ?>

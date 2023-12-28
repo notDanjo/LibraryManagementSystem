@@ -12,10 +12,10 @@ if (isset($_POST['submit'])) {
 	$due = trim($_POST['dueDate']);
 
 	// Validation
-	if (empty($bid) || empty($bdate) || empty($due)) {
-		echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
-		return;
-	}
+    if (empty($bid) || $bid == 'SELECT BOOK' || empty($bdate) || empty($due)) {
+        echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
+        return;
+    }
 
 	$bqry = mysqli_query($conn, "SELECT * FROM books where bookId = {$bid} ");
 	$bdata = mysqli_fetch_array($bqry);
