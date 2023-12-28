@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2023 at 03:40 AM
+-- Generation Time: Dec 28, 2023 at 04:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -230,7 +230,20 @@ INSERT INTO `audit_logs_admin` (`audit_id`, `adminId`, `audit_logs`, `audit_time
 (211, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 10:32:39'),
 (212, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:33:04'),
 (213, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 10:36:04'),
-(214, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:36:25');
+(214, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:36:25'),
+(215, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 10:43:55'),
+(216, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:44:14'),
+(217, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 10:51:48'),
+(218, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:52:14'),
+(219, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:03:03'),
+(220, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:03:45'),
+(221, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:10:01'),
+(222, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:10:40'),
+(223, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:13:23'),
+(224, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:14:03'),
+(225, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:16:47'),
+(226, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:17:33'),
+(227, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:18:32');
 
 -- --------------------------------------------------------
 
@@ -256,8 +269,19 @@ CREATE TABLE `audit_logs_borrow` (
   `auditId_borrow` int(11) NOT NULL,
   `borrowId` int(11) NOT NULL,
   `action` varchar(255) NOT NULL,
-  `audit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `audit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `memberName` varchar(255) DEFAULT NULL,
+  `bookName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `audit_logs_borrow`
+--
+
+INSERT INTO `audit_logs_borrow` (`auditId_borrow`, `borrowId`, `action`, `audit_timestamp`, `memberName`, `bookName`) VALUES
+(75, 24, 'Book borrowed: Oliver Twist by Tom Jordan A. Esmale (2021-05541)', '2023-12-28 03:17:24', 'Tom Jordan A. Esmale', 'Oliver Twist'),
+(76, 24, 'Book \'Oliver Twist\' returned by admin \'fozzy\'', '2023-12-28 03:17:40', 'Tom Jordan A. Esmale', 'Oliver Twist'),
+(77, 24, 'Book \'Oliver Twist\' removed by admin \'fozzy\'', '2023-12-28 03:17:40', 'Tom Jordan A. Esmale', 'Oliver Twist');
 
 -- --------------------------------------------------------
 
@@ -333,7 +357,19 @@ INSERT INTO `audit_logs_user` (`audit_id`, `studentId`, `audit_logs`, `audit_tim
 (131, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 10:32:49'),
 (132, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:33:00'),
 (133, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 10:36:12'),
-(134, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:36:21');
+(134, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:36:21'),
+(135, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 10:44:01'),
+(136, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:44:10'),
+(137, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 10:52:01'),
+(138, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:52:10'),
+(139, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:03:18'),
+(140, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:03:41'),
+(141, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:10:23'),
+(142, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:10:34'),
+(143, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:13:46'),
+(144, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:13:59'),
+(145, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:17:18'),
+(146, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:17:29');
 
 -- --------------------------------------------------------
 
@@ -359,7 +395,7 @@ CREATE TABLE `books` (
 
 INSERT INTO `books` (`bookId`, `bookTitle`, `author`, `ISBN`, `bookCopies`, `publisherName`, `available`, `categories`, `callNumber`) VALUES
 (5, 'How to Become a Billionaire', 'James Flitch', '1900-124-3242', '30', 'Robert Muller', 'YES', 'Morals', '0902334'),
-(6, 'Oliver Twist', 'Charles Dickey', '123-423-4-13', '21', 'African Books.Inc', 'YES', 'Fairy Tail', '0216230.'),
+(6, 'Oliver Twist', 'Charles Dickey', '123-423-4-13', '18', 'African Books.Inc', 'YES', 'Fairy Tail', '0216230.'),
 (7, 'Death of a million starts 2', 'Breakthrough', '123', '33', 'Rexxon', 'YES', '123', '12');
 
 -- --------------------------------------------------------
@@ -508,7 +544,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_admin`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_books`
@@ -520,13 +556,13 @@ ALTER TABLE `audit_logs_books`
 -- AUTO_INCREMENT for table `audit_logs_borrow`
 --
 ALTER TABLE `audit_logs_borrow`
-  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_user`
 --
 ALTER TABLE `audit_logs_user`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT for table `books`
@@ -538,7 +574,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `borrow`
 --
 ALTER TABLE `borrow`
-  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -572,7 +608,7 @@ ALTER TABLE `audit_logs_books`
 -- Constraints for table `audit_logs_borrow`
 --
 ALTER TABLE `audit_logs_borrow`
-  ADD CONSTRAINT `fk_borrow` FOREIGN KEY (`borrowId`) REFERENCES `borrow` (`borrowId`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_borrow` FOREIGN KEY (`borrowId`) REFERENCES `borrow` (`borrowId`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `audit_logs_user`
