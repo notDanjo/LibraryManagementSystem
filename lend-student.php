@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 			// Insert audit log for successful borrow
 			$auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";
-			$sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action) VALUES ('$borrowId', '$auditMessage')";
+			$sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action, memberName, bookName) VALUES ('$borrowId', '$auditMessage', '$name', '{$bdata['bookTitle']}')";
 			mysqli_query($conn, $sql_audit);
 
 			// Decrease the book count by 1

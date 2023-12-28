@@ -34,7 +34,7 @@ $sql_books = "SELECT audit_logs_books.*, DATE_FORMAT(audit_logs_books.audit_time
 $query_books = mysqli_query($conn, $sql_books);
 
 
-$sql_borrow = "SELECT audit_logs_borrow.*, borrow.memberName, borrow.bookName FROM audit_logs_borrow JOIN borrow ON audit_logs_borrow.borrowId = borrow.borrowId WHERE (borrow.memberName LIKE '%" . $search_query . "%' OR borrow.bookName LIKE '%" . $search_query . "%' OR audit_logs_borrow.action LIKE '%" . $search_query . "%' OR audit_logs_borrow.auditId_borrow LIKE '%" . $search_query . "%' OR audit_logs_borrow.borrowId LIKE '%" . $search_query . "%') ORDER BY audit_logs_borrow.audit_timestamp DESC, $sort_borrow $direction LIMIT $start, $results_per_page";
+$sql_borrow = "SELECT * FROM audit_logs_borrow WHERE (action LIKE '%" . $search_query . "%' OR auditId_borrow LIKE '%" . $search_query . "%' OR borrowId LIKE '%" . $search_query . "%') ORDER BY audit_timestamp DESC, $sort_borrow $direction LIMIT $start, $results_per_page";
 $query_borrow = mysqli_query($conn, $sql_borrow);
 
 ?>
