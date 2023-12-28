@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 
 	// Check if the book is available
 	if ($bdata['bookCopies'] > 0) {
-		$sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid')";
+		$sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId, Status) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid', 'Pending')";
 		$query_borrow = mysqli_query($conn, $sql_borrow);
 
 		if ($query_borrow) {
