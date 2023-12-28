@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2023 at 11:52 AM
+-- Generation Time: Dec 27, 2023 at 08:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -141,7 +141,89 @@ INSERT INTO `audit_logs_admin` (`audit_id`, `adminId`, `audit_logs`, `audit_time
 (122, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 18:44:30'),
 (123, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 18:44:55'),
 (124, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 18:46:51'),
-(125, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 18:47:20');
+(125, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 18:47:20'),
+(126, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 21:14:27'),
+(127, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 21:24:26'),
+(128, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 21:24:57'),
+(129, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 21:25:12'),
+(130, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 21:29:53'),
+(131, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 21:30:01'),
+(132, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 21:42:28'),
+(133, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 21:42:34'),
+(134, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 21:49:44'),
+(135, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 21:49:49'),
+(136, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 21:52:01'),
+(137, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 21:52:05'),
+(138, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:00:15'),
+(139, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:00:44'),
+(140, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:04:00'),
+(141, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:04:04'),
+(142, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:05:27'),
+(143, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:05:33'),
+(144, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:23:11'),
+(145, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:23:15'),
+(146, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:23:29'),
+(147, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:23:36'),
+(148, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:29:06'),
+(149, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:29:12'),
+(150, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:43:03'),
+(151, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:43:07'),
+(152, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:50:23'),
+(153, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:50:31'),
+(154, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 22:55:16'),
+(155, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 22:55:20'),
+(156, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 23:32:40'),
+(157, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 23:32:45'),
+(158, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 23:48:54'),
+(159, 1, 'Admin 1 (fozzy) logged in', '2023-12-27 23:48:59'),
+(160, 1, 'Admin 1 (fozzy) logged out', '2023-12-27 23:57:22'),
+(161, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:00:29'),
+(162, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:01:10'),
+(163, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:03:19'),
+(164, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:05:23'),
+(165, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:21:07'),
+(166, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:22:44'),
+(167, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:26:08'),
+(168, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:46:40'),
+(169, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:46:59'),
+(170, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:49:10'),
+(171, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:49:41'),
+(172, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:53:31'),
+(173, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:53:56'),
+(174, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 00:57:33'),
+(175, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 00:58:02'),
+(176, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 01:06:29'),
+(177, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 01:06:58'),
+(178, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 01:19:25'),
+(179, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 01:40:46'),
+(180, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 01:45:29'),
+(181, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 01:45:43'),
+(182, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 01:45:59'),
+(183, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 01:46:19'),
+(184, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:00:11'),
+(185, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:00:18'),
+(186, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:02:31'),
+(187, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:02:36'),
+(188, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:13:48'),
+(189, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:13:54'),
+(190, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:15:33'),
+(191, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:15:37'),
+(192, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:25:10'),
+(193, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:25:40'),
+(194, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:28:28'),
+(195, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:28:48'),
+(196, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:31:23'),
+(197, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:31:42'),
+(198, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:35:12'),
+(199, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:35:30'),
+(200, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:37:38'),
+(201, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:37:56'),
+(202, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:46:37'),
+(203, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:46:42'),
+(204, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:48:11'),
+(205, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:48:16'),
+(206, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:50:34'),
+(207, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:50:53');
 
 -- --------------------------------------------------------
 
@@ -162,8 +244,10 @@ CREATE TABLE `audit_logs_books` (
 --
 
 INSERT INTO `audit_logs_books` (`auditId_books`, `bookId`, `action`, `audit_timestamp`, `bookTitle`) VALUES
-(54, 25, 'Book added: The Invisible Life of Addie LaRue', '2023-12-27 10:47:34', 'The Invisible Life of Addie LaRue'),
-(55, 25, 'Book with title: The Invisible Life of Addie LaRue was removed', '2023-12-27 10:47:58', 'The Invisible Life of Addie LaRue');
+(81, 7, 'Book 7 updated: Title changed from \'Death of a million starts\' to \'Death of a million starts 2\'', '2023-12-27 15:54:21', 'Death of a million starts 2'),
+(82, 30, 'Book: The Midnight Library was added', '2023-12-27 15:54:28', 'The Midnight Library'),
+(83, 30, 'Book 30 updated: Author changed from \'Matt Haig\' to \'Matt Haigo\'', '2023-12-27 15:54:37', 'The Midnight Library'),
+(84, 30, 'Book: The Midnight Library was removed', '2023-12-27 15:54:41', 'The Midnight Library');
 
 -- --------------------------------------------------------
 
@@ -177,6 +261,21 @@ CREATE TABLE `audit_logs_borrow` (
   `action` varchar(255) NOT NULL,
   `audit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `audit_logs_borrow`
+--
+
+INSERT INTO `audit_logs_borrow` (`auditId_borrow`, `borrowId`, `action`, `audit_timestamp`) VALUES
+(47, 14, 'Book borrowed: Death of a million starts 2 by Tom Jordan A. Esmale (2021-05541)', '2023-12-27 18:37:50'),
+(48, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:37:59'),
+(49, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:38:50'),
+(50, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:46:44'),
+(51, 14, 'Book \'Death of a million starts 2\' deleted by admin \'fozzy\'', '2023-12-27 18:46:44'),
+(52, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:48:19'),
+(53, 14, 'Book \'Death of a million starts 2\' deleted by admin \'fozzy\'', '2023-12-27 18:48:19'),
+(54, 15, 'Book borrowed: Oliver Twist by Tom Jordan A. Esmale (2021-05541)', '2023-12-27 18:50:46'),
+(55, 15, 'Book \'Oliver Twist\' returned by admin \'fozzy\'', '2023-12-27 18:50:57');
 
 -- --------------------------------------------------------
 
@@ -200,7 +299,53 @@ INSERT INTO `audit_logs_user` (`audit_id`, `studentId`, `audit_logs`, `audit_tim
 (79, 8, 'User updated their password in their profile.', '2023-12-27 04:12:43'),
 (80, 8, 'Student 8 (notdanjo) logged out', '2023-12-27 16:12:46'),
 (81, 8, 'Student 8 (notdanjo) logged in', '2023-12-27 18:42:43'),
-(82, 8, 'Student 8 (notdanjo) logged out', '2023-12-27 18:44:19');
+(82, 8, 'Student 8 (notdanjo) logged out', '2023-12-27 18:44:19'),
+(83, 8, 'Student 8 (notdanjo) logged in', '2023-12-27 21:24:05'),
+(84, 8, 'Student 8 (notdanjo) logged out', '2023-12-27 21:24:21'),
+(85, 8, 'Student 8 (notdanjo) logged in', '2023-12-27 21:25:01'),
+(86, 8, 'Student 8 (notdanjo) logged out', '2023-12-27 21:25:08'),
+(87, 8, 'Student 8 (notdanjo) logged in', '2023-12-27 23:57:26'),
+(88, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:00:24'),
+(89, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:01:14'),
+(90, 8, 'User updated their Matric No in their profile.', '2023-12-28 12:03:06'),
+(91, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:03:09'),
+(92, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:03:13'),
+(93, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:03:15'),
+(94, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:05:27'),
+(95, 8, 'User updated their Student ID in their profile.', '2023-12-28 12:11:33'),
+(96, 8, 'User updated their  in their profile.', '2023-12-28 12:14:45'),
+(97, 8, 'User updated their Student ID in their profile.', '2023-12-28 12:20:46'),
+(98, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:21:03'),
+(99, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:22:48'),
+(100, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:26:03'),
+(101, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:46:44'),
+(102, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:46:54'),
+(103, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:49:15'),
+(104, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:49:36'),
+(105, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:53:35'),
+(106, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:53:52'),
+(107, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 00:57:36'),
+(108, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 00:57:59'),
+(109, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 01:06:40'),
+(110, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 01:06:53'),
+(111, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 01:19:31'),
+(112, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 01:40:41'),
+(113, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 01:45:34'),
+(114, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 01:45:40'),
+(115, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 01:46:04'),
+(116, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 01:46:14'),
+(117, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:25:21'),
+(118, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:25:35'),
+(119, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:28:33'),
+(120, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:28:44'),
+(121, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:31:29'),
+(122, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:31:39'),
+(123, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:35:17'),
+(124, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:35:27'),
+(125, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:37:43'),
+(126, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:37:52'),
+(127, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:50:41'),
+(128, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:50:49');
 
 -- --------------------------------------------------------
 
@@ -226,8 +371,8 @@ CREATE TABLE `books` (
 
 INSERT INTO `books` (`bookId`, `bookTitle`, `author`, `ISBN`, `bookCopies`, `publisherName`, `available`, `categories`, `callNumber`) VALUES
 (5, 'How to Become a Billionaire', 'James Flitch', '1900-124-3242', '30', 'Robert Muller', 'YES', 'Morals', '0902334'),
-(6, 'Oliver Twist', 'Charles Dickey', '123-423-4-13', '12', 'African Books.Inc', 'YES', 'Fairy Tail', '0216230.'),
-(7, 'Death of a million starts', 'Breakthrough', '123', '3', 'Rexxon', 'YES', '123', '12');
+(6, 'Oliver Twist', 'Charles Dickey', '123-423-4-13', '21', 'African Books.Inc', 'YES', 'Fairy Tail', '0216230.'),
+(7, 'Death of a million starts 2', 'Breakthrough', '123', '33', 'Rexxon', 'YES', '123', '12');
 
 -- --------------------------------------------------------
 
@@ -247,15 +392,6 @@ CREATE TABLE `borrow` (
   `fine` varchar(100) NOT NULL,
   `studentId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `borrow`
---
-
-INSERT INTO `borrow` (`borrowId`, `memberName`, `matricNo`, `bookName`, `borrowDate`, `returnDate`, `bookId`, `borrowStatus`, `fine`, `studentId`) VALUES
-(1, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Oliver Twist', '', '', 6, 0, 'Paid', 0),
-(2, 'Nwachinemere Ibeagi', 'ADSE-9835', 'Death of a million starts', '2023-12-16', '2023-12-19', 7, 0, 'Paid', 0),
-(3, 'Tom Jordan A. Esmale', 'BSIT-3F', 'How to Become a Billionaire', '2023-12-19', '2023-12-20', 5, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -305,7 +441,7 @@ INSERT INTO `students` (`studentId`, `matric_no`, `password`, `username`, `email
 (1, 'ADSE-9835', '1234', 'bams', 'fuzzy245.in@gmail.com', 'Software Engineering', 2, '1500', '4477_1526321327.jpeg', '08124579655', 'Nwachinemere Ibeagi'),
 (2, 'ADSE-9835', '1234', 'somty', 'somygee@gmail.com', 'Software Engineering', 2, '1234', '2093_1531223199.jpeg', '08124578966', 'Somtochukwu Ugwu'),
 (6, 'ADSE-9831', '1234', 'kurtd', 'asdf@gmail.com', 'IT', 0, 'null', '7201_1702838507.jpeg', 'asdf@gmail.', 'asdf'),
-(8, 'BSIT-3F', '1234', 'notdanjo', 'tjesmale@gmail.com', 'Engineering', 0, 'null', '', '09198452235', 'Tom Jordan A. Esmale');
+(8, '2021-05541', '1234', 'notdanjo', 'tjesmale@gmail.com', 'Engineering', 0, 'null', '', '09198452235', 'Tom Jordan A. Esmale');
 
 --
 -- Indexes for dumped tables
@@ -384,37 +520,37 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_admin`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_books`
 --
 ALTER TABLE `audit_logs_books`
-  MODIFY `auditId_books` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `auditId_books` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_borrow`
 --
 ALTER TABLE `audit_logs_borrow`
-  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_user`
 --
 ALTER TABLE `audit_logs_user`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `bookId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `bookId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `borrow`
 --
 ALTER TABLE `borrow`
-  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -443,12 +579,6 @@ ALTER TABLE `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_books`
   ADD CONSTRAINT `audit_logs_books_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
-
---
--- Constraints for table `audit_logs_borrow`
---
-ALTER TABLE `audit_logs_borrow`
-  ADD CONSTRAINT `audit_logs_borrow_ibfk_1` FOREIGN KEY (`borrowId`) REFERENCES `borrow` (`borrowId`);
 
 --
 -- Constraints for table `audit_logs_user`
