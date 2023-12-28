@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 			mysqli_query($conn, $sql_audit);
 
 			echo "<script>alert('Admin added successfully.');
-				location.href ='adminstable.php';
+				location.href ='users.php';
 				</script>";
 		} else {
 			echo "<script>alert('Admin not added!');

@@ -24,7 +24,15 @@ $results_per_page = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $results_per_page;
 
-$sql_admin = "SELECT audit_logs_admin.*, admin.adminName FROM audit_logs_admin JOIN admin ON audit_logs_admin.adminId = admin.adminId WHERE (admin.adminName LIKE '%" . $search_query . "%' OR audit_logs_admin.audit_logs LIKE '%" . $search_query . "%' OR audit_logs_admin.audit_id LIKE '%" . $search_query . "%' OR audit_logs_admin.adminId LIKE '%" . $search_query . "%') ORDER BY audit_logs_admin.audit_timestamp DESC, $sort_admin $direction LIMIT $start, $results_per_page";
+$sql_admin = "SELECT audit_logs_admin.*, admin.adminName 
+FROM audit_logs_admin 
+LEFT JOIN admin ON audit_logs_admin.adminId = admin.adminId 
+WHERE (admin.adminName LIKE '%" . $search_query . "%' 
+OR audit_logs_admin.audit_logs LIKE '%" . $search_query . "%' 
+OR audit_logs_admin.audit_id LIKE '%" . $search_query . "%' 
+OR audit_logs_admin.adminId LIKE '%" . $search_query . "%') 
+ORDER BY audit_logs_admin.audit_timestamp DESC, $sort_admin $direction 
+LIMIT $start, $results_per_page";
 $query_admin = mysqli_query($conn, $sql_admin);
 
 $sql_user = "SELECT audit_logs_user.*, students.name FROM audit_logs_user JOIN students ON audit_logs_user.studentId = students.studentId WHERE (students.name LIKE '%" . $search_query . "%' OR audit_logs_user.audit_logs LIKE '%" . $search_query . "%' OR audit_logs_user.audit_id LIKE '%" . $search_query . "%' OR audit_logs_user.studentId LIKE '%" . $search_query . "%') ORDER BY audit_logs_user.audit_id DESC, audit_logs_user.audit_timestamp DESC LIMIT $start, $results_per_page";

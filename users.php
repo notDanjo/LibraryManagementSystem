@@ -14,20 +14,20 @@ require 'includes/db-inc.php';
 include "includes/header.php";
 
 if (isset($_POST['del'])) {
-
 	$id = sanitize(trim($_POST['id']));
-	// echo $id;
 
+	// Add an audit log before deleting the admin
+	$sql_audit = "INSERT INTO audit_logs_admin (adminId, audit_logs) VALUES ('$id', 'Admin deleted')";
+	mysqli_query($conn, $sql_audit);
+
+	// Then delete the admin
 	$sql_del = "DELETE from admin where adminId = $id";
 	$error = false;
-
 	$result = mysqli_query($conn, $sql_del);
 	if ($result) {
 		$error = true;
 	}
 }
-
-
 ?>
 
 
