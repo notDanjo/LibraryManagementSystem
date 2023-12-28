@@ -4,6 +4,11 @@ session_start();
 date_default_timezone_set('Asia/Hong_Kong');
 
 require 'includes/db-inc.php';
+if (!isset($_SESSION['student-username'])) {
+    header("Location: login.php"); // replace 'login.php' with the path to your login script
+    exit;
+}
+
 $student_name = $_SESSION['student-username'];
 
 $sql = "SELECT * FROM students WHERE username = '$student_name'";

@@ -59,7 +59,7 @@ if(isset($_POST['del'])){
 	<div class="alert alert-warning col-lg-7 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-0 col-sm-offset-1 col-xs-offset-0" style="margin-top:70px">
 
 		<span class="glyphicon glyphicon-book"></span>
-	    <strong>Fines</strong> Table
+	    <strong>Transaction</strong> Table
 	</div>
 
 	</div>
@@ -74,7 +74,6 @@ if(isset($_POST['del'])){
             </div>
             <?php } ?>
 		  	<div class="row">
-		  	  <a><button class="btn btn-success col-lg-3 col-md-4 col-sm-11 col-xs-11 button" style="margin-left: 15px;margin-bottom: 5px"> Fines</button></a>
 			  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
 			  
 			  </div><!-- /.col-lg-6 -->
@@ -90,7 +89,7 @@ if(isset($_POST['del'])){
 		                  <th>Book Name</th>
 		                  <th>Borrow date</th>
 		                  <th>Return Date</th>
-		                  <th>Overdue Charges</th>
+		                  <th>Transaction Status</th>
 		                </tr>    
 		          </thead>  
 
@@ -109,12 +108,7 @@ if(isset($_POST['del'])){
 		             <td><?php echo $row['bookName']; ?></td>
 		             <td><?php echo $row['borrowDate']; ?></td>
 		             <td><?php echo $row['returnDate']; ?></td>
-		             <td> 
-		             	<?php echo $row['fine']; ?><form action="fine-student.php" method="post">
-		             		<input type="hidden" name="id" value="<?php echo $row['borrowId']; ?>">
-		             <button name="check" type="submit" class="btn btn-warning">CHECK</button>
-		             </form>
-		             </td>
+		             <td><?php echo $row['Status']; ?></td> <!-- Display the Status column -->
 		            </tr> 
 		            <?php } ?> 
 		         </tbody> 
