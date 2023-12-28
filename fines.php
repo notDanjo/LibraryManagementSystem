@@ -56,6 +56,18 @@ if (isset($_POST['del'])) {
 	$stmt = mysqli_prepare($conn, $sql);
 	mysqli_stmt_execute($stmt);
 
+	// Insert the deletion into the audit_logs_borrow table
+	$action = "Book '$bookName' deleted by admin '$userName'";
+	$sql = "INSERT INTO audit_logs_borrow (borrowId, action, audit_timestamp) VALUES (?, ?, CURRENT_TIMESTAMP)";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_bind_param($stmt, "ss", $id, $action);
+	mysqli_stmt_execute($stmt);
+
+	// Disable foreign key checks
+	$sql = "SET FOREIGN_KEY_CHECKS = 0";
+	$stmt = mysqli_prepare($conn, $sql);
+	mysqli_stmt_execute($stmt);
+
 	// Delete the record from the borrow table
 	$sql = "DELETE FROM borrow WHERE borrowId = ?";
 	$stmt = mysqli_prepare($conn, $sql);
@@ -65,13 +77,6 @@ if (isset($_POST['del'])) {
 	// Enable foreign key checks
 	$sql = "SET FOREIGN_KEY_CHECKS = 1";
 	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_execute($stmt);
-
-	// Insert the deletion into the audit_logs_borrow table
-	$action = "Book '$bookName' deleted by admin '$userName'";
-	$sql = "INSERT INTO audit_logs_borrow (borrowId, action, audit_timestamp) VALUES (?, ?, CURRENT_TIMESTAMP)";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "ss", $id, $action);
 	mysqli_stmt_execute($stmt);
 
 	$error = false;
