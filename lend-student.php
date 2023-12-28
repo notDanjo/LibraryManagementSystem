@@ -7,10 +7,18 @@ $name = isset($_SESSION['student-name']) ? $_SESSION['student-name'] : '';
 $number = isset($_SESSION['student-matric']) ? $_SESSION['student-matric'] : '';
 
 	
-if(isset($_POST['submit'])){
+if(isset($_POST['submit']))
+{
     $bid = trim($_POST['bookId']);
     $bdate = trim($_POST['borrowDate']);
     $due = trim($_POST['dueDate']);
+
+	// Validation
+	if (empty($bid) || empty($bdate) || empty($due)) 
+	{
+		echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
+		return;
+	}
 
     $bqry = mysqli_query($conn,"SELECT * FROM books where bookId = {$bid} ");
     $bdata = mysqli_fetch_array($bqry);
@@ -26,7 +34,7 @@ if(isset($_POST['submit'])){
 
             // Insert audit log for successful borrow
             $auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";
-            $sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action) VALUES ('$borrowId', '$auditMessage')";
+            $sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action, memberName, bookName) VALUES ('$borrowId', '$auditMessage', '$name', '{$bdata['bookTitle']}')";
             mysqli_query($conn, $sql_audit);
 
             // Decrease the book count by 1
