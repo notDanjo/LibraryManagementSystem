@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2023 at 08:09 PM
+-- Generation Time: Dec 28, 2023 at 03:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -223,7 +223,14 @@ INSERT INTO `audit_logs_admin` (`audit_id`, `adminId`, `audit_logs`, `audit_time
 (204, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:48:11'),
 (205, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:48:16'),
 (206, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 02:50:34'),
-(207, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:50:53');
+(207, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 02:50:53'),
+(208, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 09:02:41'),
+(209, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 09:25:50'),
+(210, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 09:26:16'),
+(211, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 10:32:39'),
+(212, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:33:04'),
+(213, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 10:36:04'),
+(214, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 10:36:25');
 
 -- --------------------------------------------------------
 
@@ -239,16 +246,6 @@ CREATE TABLE `audit_logs_books` (
   `bookTitle` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `audit_logs_books`
---
-
-INSERT INTO `audit_logs_books` (`auditId_books`, `bookId`, `action`, `audit_timestamp`, `bookTitle`) VALUES
-(81, 7, 'Book 7 updated: Title changed from \'Death of a million starts\' to \'Death of a million starts 2\'', '2023-12-27 15:54:21', 'Death of a million starts 2'),
-(82, 30, 'Book: The Midnight Library was added', '2023-12-27 15:54:28', 'The Midnight Library'),
-(83, 30, 'Book 30 updated: Author changed from \'Matt Haig\' to \'Matt Haigo\'', '2023-12-27 15:54:37', 'The Midnight Library'),
-(84, 30, 'Book: The Midnight Library was removed', '2023-12-27 15:54:41', 'The Midnight Library');
-
 -- --------------------------------------------------------
 
 --
@@ -261,21 +258,6 @@ CREATE TABLE `audit_logs_borrow` (
   `action` varchar(255) NOT NULL,
   `audit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `audit_logs_borrow`
---
-
-INSERT INTO `audit_logs_borrow` (`auditId_borrow`, `borrowId`, `action`, `audit_timestamp`) VALUES
-(47, 14, 'Book borrowed: Death of a million starts 2 by Tom Jordan A. Esmale (2021-05541)', '2023-12-27 18:37:50'),
-(48, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:37:59'),
-(49, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:38:50'),
-(50, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:46:44'),
-(51, 14, 'Book \'Death of a million starts 2\' deleted by admin \'fozzy\'', '2023-12-27 18:46:44'),
-(52, 14, 'Book \'Death of a million starts 2\' returned by admin \'fozzy\'', '2023-12-27 18:48:19'),
-(53, 14, 'Book \'Death of a million starts 2\' deleted by admin \'fozzy\'', '2023-12-27 18:48:19'),
-(54, 15, 'Book borrowed: Oliver Twist by Tom Jordan A. Esmale (2021-05541)', '2023-12-27 18:50:46'),
-(55, 15, 'Book \'Oliver Twist\' returned by admin \'fozzy\'', '2023-12-27 18:50:57');
 
 -- --------------------------------------------------------
 
@@ -345,7 +327,13 @@ INSERT INTO `audit_logs_user` (`audit_id`, `studentId`, `audit_logs`, `audit_tim
 (125, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:37:43'),
 (126, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:37:52'),
 (127, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 02:50:41'),
-(128, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:50:49');
+(128, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 02:50:49'),
+(129, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 09:25:54'),
+(130, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 09:26:11'),
+(131, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 10:32:49'),
+(132, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:33:00'),
+(133, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 10:36:12'),
+(134, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 10:36:21');
 
 -- --------------------------------------------------------
 
@@ -520,7 +508,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_admin`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_books`
@@ -532,13 +520,13 @@ ALTER TABLE `audit_logs_books`
 -- AUTO_INCREMENT for table `audit_logs_borrow`
 --
 ALTER TABLE `audit_logs_borrow`
-  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_user`
 --
 ALTER TABLE `audit_logs_user`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `books`
@@ -550,7 +538,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `borrow`
 --
 ALTER TABLE `borrow`
-  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -579,6 +567,12 @@ ALTER TABLE `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_books`
   ADD CONSTRAINT `audit_logs_books_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`bookId`);
+
+--
+-- Constraints for table `audit_logs_borrow`
+--
+ALTER TABLE `audit_logs_borrow`
+  ADD CONSTRAINT `fk_borrow` FOREIGN KEY (`borrowId`) REFERENCES `borrow` (`borrowId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `audit_logs_user`
