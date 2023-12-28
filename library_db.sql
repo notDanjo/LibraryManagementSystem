@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2023 at 04:19 AM
+-- Generation Time: Dec 28, 2023 at 07:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -52,7 +52,7 @@ INSERT INTO `admin` (`adminId`, `adminName`, `password`, `username`, `email`, `p
 
 CREATE TABLE `audit_logs_admin` (
   `audit_id` int(100) NOT NULL,
-  `adminId` int(11) NOT NULL,
+  `adminId` int(11) DEFAULT NULL,
   `audit_logs` varchar(100) NOT NULL,
   `audit_timestamp` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -243,7 +243,19 @@ INSERT INTO `audit_logs_admin` (`audit_id`, `adminId`, `audit_logs`, `audit_time
 (224, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:14:03'),
 (225, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:16:47'),
 (226, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:17:33'),
-(227, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:18:32');
+(227, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 11:18:32'),
+(228, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 11:24:59'),
+(230, 3, 'Admin 3 (smith) logged in', '2023-12-28 12:24:52'),
+(231, 3, 'Admin 3 (smith) logged out', '2023-12-28 12:24:57'),
+(232, 3, 'Admin 3 (smith) logged in', '2023-12-28 12:33:35'),
+(233, 3, 'Admin 3 (smith) logged out', '2023-12-28 12:42:13'),
+(234, 3, 'Admin 3 (smith) logged in', '2023-12-28 12:51:49'),
+(235, 3, 'Admin 3 (smith) logged out', '2023-12-28 12:56:45'),
+(236, 3, 'Admin 3 (smith) logged in', '2023-12-28 12:59:51'),
+(237, 3, 'Admin 3 (smith) logged out', '2023-12-28 13:03:04'),
+(238, 3, 'Admin 3 (smith) logged in', '2023-12-28 13:03:23'),
+(239, 1, 'Admin 1 (fozzy) logged out', '2023-12-28 14:13:43'),
+(240, 1, 'Admin 1 (fozzy) logged in', '2023-12-28 14:13:53');
 
 -- --------------------------------------------------------
 
@@ -273,15 +285,6 @@ CREATE TABLE `audit_logs_borrow` (
   `memberName` varchar(255) DEFAULT NULL,
   `bookName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `audit_logs_borrow`
---
-
-INSERT INTO `audit_logs_borrow` (`auditId_borrow`, `borrowId`, `action`, `audit_timestamp`, `memberName`, `bookName`) VALUES
-(75, 24, 'Book borrowed: Oliver Twist by Tom Jordan A. Esmale (2021-05541)', '2023-12-28 03:17:24', 'Tom Jordan A. Esmale', 'Oliver Twist'),
-(76, 24, 'Book \'Oliver Twist\' returned by admin \'fozzy\'', '2023-12-28 03:17:40', 'Tom Jordan A. Esmale', 'Oliver Twist'),
-(77, 24, 'Book \'Oliver Twist\' removed by admin \'fozzy\'', '2023-12-28 03:17:40', 'Tom Jordan A. Esmale', 'Oliver Twist');
 
 -- --------------------------------------------------------
 
@@ -369,7 +372,20 @@ INSERT INTO `audit_logs_user` (`audit_id`, `studentId`, `audit_logs`, `audit_tim
 (143, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:13:46'),
 (144, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:13:59'),
 (145, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:17:18'),
-(146, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:17:29');
+(146, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:17:29'),
+(147, 8, 'Student 8 (notdanjo) logged in', '2023-12-28 11:23:59'),
+(148, 8, 'User updated their password in their profile.', '2023-12-28 11:24:07'),
+(149, 8, 'Student 8 (notdanjo) logged out', '2023-12-28 11:24:54'),
+(150, 6, 'Student 6 (kurtd) logged in', '2023-12-28 12:25:03'),
+(151, 6, 'User updated their name in their profile.', '2023-12-28 12:25:39'),
+(152, 6, 'Student 6 (kurtd) logged out', '2023-12-28 12:33:31'),
+(153, 6, 'Student 6 (kurtd) logged in', '2023-12-28 12:42:18'),
+(154, 6, 'Student 6 (kurtd) logged out', '2023-12-28 12:51:38'),
+(155, 6, 'Student 6 (kurtd) logged in', '2023-12-28 12:51:44'),
+(156, 6, 'Student 6 (kurtd) logged out', '2023-12-28 12:51:45'),
+(157, 6, 'Student 6 (kurtd) logged in', '2023-12-28 12:56:58'),
+(158, 6, 'Student 6 (kurtd) logged out', '2023-12-28 12:59:46'),
+(159, 6, 'Student 6 (kurtd) logged in', '2023-12-28 13:03:30');
 
 -- --------------------------------------------------------
 
@@ -396,7 +412,7 @@ CREATE TABLE `books` (
 INSERT INTO `books` (`bookId`, `bookTitle`, `author`, `ISBN`, `bookCopies`, `publisherName`, `available`, `categories`, `callNumber`) VALUES
 (5, 'How to Become a Billionaire', 'James Flitch', '1900-124-3242', '30', 'Robert Muller', 'YES', 'Morals', '0902334'),
 (6, 'Oliver Twist', 'Charles Dickey', '123-423-4-13', '18', 'African Books.Inc', 'YES', 'Fairy Tail', '0216230.'),
-(7, 'Death of a million starts 2', 'Breakthrough', '123', '33', 'Rexxon', 'YES', '123', '12');
+(7, 'Death of a million starts', 'Breakthrough', '123', '37', 'Rexxon', 'YES', 'Fiction', '12');
 
 -- --------------------------------------------------------
 
@@ -414,7 +430,8 @@ CREATE TABLE `borrow` (
   `bookId` int(2) DEFAULT NULL,
   `borrowStatus` int(2) NOT NULL,
   `fine` varchar(100) NOT NULL,
-  `studentId` int(11) NOT NULL
+  `studentId` int(11) NOT NULL,
+  `Status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -464,8 +481,8 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`studentId`, `matric_no`, `password`, `username`, `email`, `dept`, `numOfBooks`, `moneyOwed`, `photo`, `phoneNumber`, `name`) VALUES
 (1, 'ADSE-9835', '1234', 'bams', 'fuzzy245.in@gmail.com', 'Software Engineering', 2, '1500', '4477_1526321327.jpeg', '08124579655', 'Nwachinemere Ibeagi'),
 (2, 'ADSE-9835', '1234', 'somty', 'somygee@gmail.com', 'Software Engineering', 2, '1234', '2093_1531223199.jpeg', '08124578966', 'Somtochukwu Ugwu'),
-(6, 'ADSE-9831', '1234', 'kurtd', 'asdf@gmail.com', 'IT', 0, 'null', '7201_1702838507.jpeg', 'asdf@gmail.', 'asdf'),
-(8, '2021-05541', '1234', 'notdanjo', 'tjesmale@gmail.com', 'Engineering', 0, 'null', '', '09198452235', 'Tom Jordan A. Esmale');
+(6, 'ADSE-9831', '1234', 'kurtd', 'asdf@gmail.com', 'IT', 0, 'null', '7201_1702838507.jpeg', 'asdf@gmail.', 'Kurt Dacaymat'),
+(8, '2021-05541', '123', 'notdanjo', 'tjesmale@gmail.com', 'Engineering', 0, 'null', '', '09198452235', 'Tom Jordan A. Esmale');
 
 --
 -- Indexes for dumped tables
@@ -538,43 +555,43 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_admin`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=248;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_books`
 --
 ALTER TABLE `audit_logs_books`
-  MODIFY `auditId_books` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `auditId_books` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_borrow`
 --
 ALTER TABLE `audit_logs_borrow`
-  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `auditId_borrow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `audit_logs_user`
 --
 ALTER TABLE `audit_logs_user`
-  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `audit_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `bookId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `bookId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `borrow`
 --
 ALTER TABLE `borrow`
-  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `borrowId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -596,7 +613,7 @@ ALTER TABLE `students`
 -- Constraints for table `audit_logs_admin`
 --
 ALTER TABLE `audit_logs_admin`
-  ADD CONSTRAINT `audit_logs_admin_ibfk_1` FOREIGN KEY (`adminId`) REFERENCES `admin` (`adminId`);
+  ADD CONSTRAINT `audit_logs_admin_ibfk_1` FOREIGN KEY (`adminId`) REFERENCES `admin` (`adminId`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `audit_logs_books`
