@@ -7,7 +7,8 @@ require 'includes/db-inc.php';
 if (!isset($_SESSION['student-username'])) {
     header("Location: login.php"); // replace 'login.php' with the path to your login script
     exit;
-}
+}// Validation
+// Validation
 
 $student_name = $_SESSION['student-username'];
 

@@ -19,7 +19,8 @@ if(isset($_POST['submit']))
 		echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
 		return;
 	}
-
+// Validation
+// Validation
     $bqry = mysqli_query($conn,"SELECT * FROM books where bookId = {$bid} ");
     $bdata = mysqli_fetch_array($bqry);
 

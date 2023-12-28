@@ -1,4 +1,6 @@
 <?php
+// Validation
+// Validation
 require 'includes/db-inc.php';
 ?>
 
@@ -15,6 +17,7 @@ require 'includes/db-inc.php';
                             <li class="nav-item"><a href="borrow-student.php">Borrow Books</a></li>
                             <li class="nav-item"><a href="fine-student.php">Transactions</a></li>
                         </ul>
+                        
                     </div>
                     <div class="navbar-header">
                         <div class="logo">

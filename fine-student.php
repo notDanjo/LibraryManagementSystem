@@ -47,7 +47,8 @@ if(isset($_POST['del'])){
 
 	}
 
-	 
+	 // Validation
+// Validation
 
  ?>
 
