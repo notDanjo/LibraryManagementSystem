@@ -15,20 +15,38 @@ include "includes/header.php";
 
 
 if (isset($_POST['del'])) {
-	$id = trim($_POST['del-btn']);
-	$msg = "Paid";
-	$sql = "UPDATE borrow set `fine` = '$msg' where borrowId = '$id'";
-	$query = mysqli_query($conn, $sql);
-	$error = false;
-	if ($query) {
-		$error = true;
-	}
+    $id = trim($_POST['del-btn']);
+
+    // Get the bookId from the borrow table
+    $sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $bookId = $row['bookId'];
+
+    // Increase the bookCopies in the books table
+    $sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $bookId);
+    mysqli_stmt_execute($stmt);
+
+    // Delete the related records from the audit_logs_borrow table
+    $sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+
+    // Delete the record from the borrow table
+    $sql = "DELETE FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
 }
 
 ?>
 
-<<<<<<< Updated upstream
-=======
 <?php
 if (isset($_POST['reject'])) {
     $id = trim($_POST['del-btn']);
@@ -73,7 +91,6 @@ if (isset($_POST['confirm'])) {
 
 // ...
 ?>
->>>>>>> Stashed changes
 
 <div class="container">
 	<?php include "includes/nav.php"; ?>
@@ -142,17 +159,25 @@ if (isset($_POST['confirm'])) {
 						<td><?php echo $row['returnDate']; ?></td>
 						<td><?php echo $row['Status']; ?></td>
 						<td>
-							<form action="fines.php" method="post" onsubmit="return confirmAction(this);">
-								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
-								<button class="btn btn-danger" name="reject" <?php echo $row['Status'] == 'Confirmed' ? 'disabled' : ''; ?>>Reject</button>
-								<button class="btn btn-success" name="confirm" <?php echo $row['Status'] == 'Confirmed' ? 'disabled' : ''; ?>>Confirm</button>
-							</form>
+						<form action="fines.php" method="post">
+							<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
+							<button class="btn btn-danger" name="reject" <?php echo $row['Status'] == 'Confirmed' || $row['Status'] == 'Waiting for return confirmation' ? 'disabled' : ''; ?> onclick="return confirmAction(this)">Reject</button>
+							<button class="btn btn-success" name="confirm" <?php echo $row['Status'] == 'Confirmed' || $row['Status'] == 'Waiting for return confirmation' ? 'disabled' : ''; ?> onclick="return confirmAction(this)">Confirm</button>
+						</form>
 						</td>
 
 						<td>
+							<script>
+							function confirmReturn() {
+								return confirm('Confirm return of this book?');
+							}
+							</script>
+
+							<!-- ... -->
+
 							<form action="fines.php" method="post">
 								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
-								<button class="btn btn-warning" name="del">Return</button>
+								<button class="btn btn-warning" name="del" <?php echo $row['Status'] != 'Waiting for return confirmation' ? 'disabled' : ''; ?> onclick="return confirmReturn()">Confirm Return</button>
 							</form>
 						</td>
 					</tr>
@@ -209,9 +234,22 @@ if (isset($_POST['confirm'])) {
 </div>
 
 <script>
-function confirmAction(form) {
-    var action = form.querySelector('[name=reject]') ? 'Reject' : 'Confirm';
-    return confirm('Are you sure you want to ' + action + ' this record?');
+function confirmAction(button) {
+    var message = '';
+
+    switch (button.name) {
+        case 'reject':
+            message = 'Reject transaction?';
+            break;
+        case 'confirm':
+            message = 'Approve transaction?';
+            break;
+        default:
+            message = 'Are you sure you want to perform this action?';
+            break;
+    }
+
+    return confirm(message);
 }
 </script>
 <script type="text/javascript" src="js/jquery.js"></script>
