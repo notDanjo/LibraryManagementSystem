@@ -66,6 +66,7 @@ if (isset($_POST['submit'])) {
 						<div class="navbar-section">
 							<!-- Right navigation items go here -->
 							<ul class="nav navbar-nav navbar-right">
+								<li><a href="search.php">Available Books</a></li>
 								<li><a href="login.php">Login</a></li>
 								<li><a href="addstudent.php">Sign Up</a></li>
 							</ul>
@@ -91,60 +92,54 @@ if (isset($_POST['submit'])) {
 			<div class="container">
 				<form class="form-horizontal" role="form" action="addstudent.php" method="post" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="name" class="col-sm-2 control-label">FULL NAME</label>
+						<label for="Username" class="col-sm-2 control-label">FULL NAME</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="name" placeholder="Full name" id="name" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="matric_no" class="col-sm-2 control-label">Student Code</label>
+						<label for="Password" class="col-sm-2 control-label">Student Code</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="matric_no" placeholder="Student Code" id="matric_no" required>
+							<input type="text" class="form-control" name="matric_no" placeholder="Student Code" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="dept" class="col-sm-2 control-label">DEPT</label>
+						<label for="Password" class="col-sm-2 control-label">DEPT</label>
 						<div class="col-sm-10">
-							<select class="form-control" name="dept" id="dept" required>
-								<option value="" selected disabled>Select Department</option>
-								<option value="Computer Science">Computer Science</option>
-								<option value="Information Technology">Information Technology</option>
-								<option value="Electronics">Electronics</option>
-								<!-- Add more options as needed -->
-							</select>
+							<input type="text" class="form-control" name="dept" placeholder="Department" id="Address" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="email" class="col-sm-2 control-label">EMAIL</label>
+						<label for="Password" class="col-sm-2 control-label">EMAIL</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" name="email" placeholder="Email" id="email" required>
+							<input type="email" class="form-control" name="email" placeholder="Email" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="username" class="col-sm-2 control-label">USERNAME</label>
+						<label for="Password" class="col-sm-2 control-label">USERNAME</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="username" placeholder="Username" id="username" required>
+							<input type="text" class="form-control" name="username" placeholder="Username" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="password" class="col-sm-2 control-label">PASSWORD</label>
+						<label for="Password" class="col-sm-2 control-label">PASSWORD</label>
 						<div class="col-sm-10">
 							<input type="password" class="form-control" name="password" placeholder="password" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="password2" class="col-sm-2 control-label">CONFRIM PASSWORD</label>
+						<label for="Password" class="col-sm-2 control-label">CONFRIM PASSWORD</label>
 						<div class="col-sm-10">
-							<input type="password" class="form-control" name="password2" placeholder="Confirm password" id="password2" required>
+							<input type="password" class="form-control" name="password2" placeholder="Confirm password" id="password" required>
 						</div>
 					</div>
 
-					<input type="hidden" name="num_books" value="null">
-					<input type="hidden" name="money_owed" value="null">
+					<input type="hidden" class="form-control" name="num_books" placeholder="books" id="password" required value="null">
+					<input type="hidden" class="form-control" name="money_owed" placeholder="Money" id="password" required value="null">
 					<div class="form-group">
-						<label for="phone" class="col-sm-2 control-label">PHONE NUMBER</label>
+						<label for="Password" class="col-sm-2 control-label">PHONE NUMBER</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="phone" placeholder="phone" id="phone" required maxlength="11">
+							<input type="text" class="form-control" name="phone" placeholder="phone" id="password" required>
 						</div>
 					</div>
 
@@ -158,6 +153,7 @@ if (isset($_POST['submit'])) {
 				</form>
 			</div>
 		</div>
+
 	</div>
 </div>
 
@@ -166,28 +162,9 @@ if (isset($_POST['submit'])) {
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#dept').on('click', function() {
-			$('option[value=""]:first', this).hide();
-		});
-
-		$('form').on('submit', function(e) {
-			var dept = $('#dept').val();
-			if (dept === "") {
-				alert("Please select a department");
-				e.preventDefault(); // Prevent the form from submitting
-			}
-
-			var phone = $('#phone').val();
-			var phoneRegEx = /^09\d{9}$/;
-			if (!phoneRegEx.test(phone)) {
-				alert("Please enter a valid Philippine phone number (09)");
-				e.preventDefault(); // Prevent the form from submitting
-			}
-		});
-
+	window.onload = function() {
 		var input = document.getElementById('name').focus();
-	});
+	}
 </script>
 </body>
 

@@ -111,31 +111,32 @@ if (isset($_POST['submit'])) {
 
 
 <div class="container">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-flex-container">
-				<div class="navbar-section">
-					<!-- Left navigation items go here -->
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="index.php">Home</a></li>
-					</ul>
-				</div>
-				<div class="navbar-header">
-					<div class="logo">
-						<img src="images/Logo.png">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-flex-container">
+					<div class="navbar-section">
+						<!-- Left navigation items go here -->
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="index.php">Home</a></li>
+						</ul>
+					</div>
+					<div class="navbar-header">
+						<div class="logo">
+							<img src="images/Logo.png">
+						</div>
+					</div>
+					<div class="navbar-section">
+						<!-- Right navigation items go here -->
+						<ul class="nav navbar-nav navbar-right">
+								<li><a href="search.php">Available Books</a></li>
+							<li><a href="login.php">Login</a></li>
+							<li><a href="addstudent.php">Sign Up</a></li>
+						</ul>
 					</div>
 				</div>
-				<div class="navbar-section">
-					<!-- Right navigation items go here -->
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="login.php">Login</a></li>
-						<li><a href="addstudent.php">Sign Up</a></li>
-					</ul>
-				</div>
 			</div>
-		</div>
-	</nav>
-</div>
+		</nav>
+	</div>
 
 <div class="container">
 

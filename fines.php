@@ -15,67 +15,58 @@ include "includes/header.php";
 
 
 if (isset($_POST['del'])) {
-	$id = trim($_POST['del-btn']);
-	$msg = "Paid";
+    $id = trim($_POST['del-btn']);
 
-	// Get the bookId from the borrow table
-	$sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$row = mysqli_fetch_assoc($result);
-	$bookId = $row['bookId'];
+    // Get the bookId from the borrow table
+    $sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $bookId = $row['bookId'];
 
-	// Increase the bookCopies in the books table
-	$sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $bookId);
-	mysqli_stmt_execute($stmt);
+    // Increase the bookCopies in the books table
+    $sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $bookId);
+    mysqli_stmt_execute($stmt);
 
-	// Update the fine status in the borrow table
-	$sql = "UPDATE borrow SET `fine` = ? WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "ss", $msg, $id);
-	mysqli_stmt_execute($stmt);
+    // Delete the related records from the audit_logs_borrow table
+    $sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
 
-	// Delete the associated records from the audit_logs_borrow table
-	$sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-
-	// Delete the record from the borrow table
-	$sql = "DELETE FROM borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-
-	$error = false;
-	if ($stmt) {
-		$error = true;
-	}
+    // Delete the record from the borrow table
+    $sql = "DELETE FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
 }
 
+?>
+
+<?php
 if (isset($_POST['reject'])) {
-	$id = trim($_POST['del-btn']);
+    $id = trim($_POST['del-btn']);
 
-	// Get the bookId from the borrow table
-	$sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$row = mysqli_fetch_assoc($result);
-	$bookId = $row['bookId'];
+    // Get the bookId from the borrow table
+    $sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    $bookId = $row['bookId'];
 
-	// Increase the bookCopies in the books table
-	$sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $bookId);
-	mysqli_stmt_execute($stmt);
+    // Increase the bookCopies in the books table
+    $sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $bookId);
+    mysqli_stmt_execute($stmt);
 
-	// Delete the associated records from the audit_logs_borrow table
+    // Delete the associated records from the audit_logs_borrow table
 	$sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
 	$stmt = mysqli_prepare($conn, $sql);
 	mysqli_stmt_bind_param($stmt, "s", $id);
@@ -89,105 +80,16 @@ if (isset($_POST['reject'])) {
 }
 
 if (isset($_POST['confirm'])) {
-	$id = trim($_POST['del-btn']);
+    $id = trim($_POST['del-btn']);
 
-	// Update the status in the borrow table
-	$sql = "UPDATE borrow SET Status = 'Confirmed' WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
+    // Update the status in the borrow table
+    $sql = "UPDATE borrow SET Status = 'Confirmed' WHERE borrowId = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
 }
 
-?>
-
-<?php
-if (isset($_POST['reject'])) {
-	$id = trim($_POST['del-btn']);
-
-	// Get the bookId from the borrow table
-	$sql = "SELECT bookId FROM borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	$row = mysqli_fetch_assoc($result);
-	$bookId = $row['bookId'];
-
-	// Increase the bookCopies in the books table
-	$sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $bookId);
-	mysqli_stmt_execute($stmt);
-
-	// Delete the associated records from the audit_logs_borrow table
-	$sql = "DELETE FROM audit_logs_borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-	$result = mysqli_stmt_get_result($stmt);
-	if (!$result) {
-		die('Error: ' . mysqli_error($conn));
-	}
-	$row = mysqli_fetch_assoc($result);
-	$bookName = mysqli_real_escape_string($conn, $row['bookName']);
-	$bookId = $row['bookId'];
-	$memberName = mysqli_real_escape_string($conn, $row['memberName']);
-
-	// Increase the bookCopies in the books table
-	$sql = "UPDATE books SET bookCopies = bookCopies + 1 WHERE bookTitle = ? AND bookId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "ss", $bookName, $bookId);
-	mysqli_stmt_execute($stmt);
-
-	// Define the userName variable
-	if (isset($_SESSION['admin'])) {
-		$userName = mysqli_real_escape_string($conn, $_SESSION['admin']);
-	} else {
-		$userName = "Unknown user";
-	}
-
-	// Insert the return into the audit_logs_borrow table
-	$action = "Book '$bookName' returned by admin '$userName'";
-	$sql = "INSERT INTO audit_logs_borrow (borrowId, action, audit_timestamp, memberName, bookName) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "ssss", $id, $action, $memberName, $bookName);
-	mysqli_stmt_execute($stmt);
-
-	// Disable foreign key checks
-	$sql = "SET FOREIGN_KEY_CHECKS = 0";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_execute($stmt);
-
-	// Insert the deletion into the audit_logs_borrow table
-	$action = "Book '$bookName' removed by admin '$userName'";
-	$sql = "INSERT INTO audit_logs_borrow (borrowId, action, audit_timestamp, memberName, bookName) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "ssss", $id, $action, $memberName, $bookName);
-	mysqli_stmt_execute($stmt);
-
-
-	// Disable foreign key checks
-	$sql = "SET FOREIGN_KEY_CHECKS = 0";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_execute($stmt);
-
-	// Delete the record from the borrow table
-	$sql = "DELETE FROM borrow WHERE borrowId = ?";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_bind_param($stmt, "s", $id);
-	mysqli_stmt_execute($stmt);
-
-	// Enable foreign key checks
-	$sql = "SET FOREIGN_KEY_CHECKS = 1";
-	$stmt = mysqli_prepare($conn, $sql);
-	mysqli_stmt_execute($stmt);
-
-	$error = false;
-	if ($stmt) {
-		$error = true;
-	}
-}
-
+// ...
 ?>
 
 <div class="container">
@@ -212,7 +114,7 @@ if (isset($_POST['reject'])) {
 				</div>
 			<?php } ?>
 			<div class="row">
-
+				
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
 					<!-- <form >
 			  		<div class="input-group pull-right">
@@ -257,10 +159,25 @@ if (isset($_POST['reject'])) {
 						<td><?php echo $row['returnDate']; ?></td>
 						<td><?php echo $row['Status']; ?></td>
 						<td>
+						<form action="fines.php" method="post">
+							<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
+							<button class="btn btn-danger" name="reject" <?php echo $row['Status'] == 'Confirmed' || $row['Status'] == 'Waiting for return confirmation' ? 'disabled' : ''; ?> onclick="return confirmAction(this)">Reject</button>
+							<button class="btn btn-success" name="confirm" <?php echo $row['Status'] == 'Confirmed' || $row['Status'] == 'Waiting for return confirmation' ? 'disabled' : ''; ?> onclick="return confirmAction(this)">Confirm</button>
+						</form>
+						</td>
+
+						<td>
+							<script>
+							function confirmReturn() {
+								return confirm('Confirm return of this book?');
+							}
+							</script>
+
+							<!-- ... -->
+
 							<form action="fines.php" method="post">
 								<input type="hidden" value="<?php echo $row['borrowId']; ?>" name="del-btn">
-								<button class="btn btn-danger" name="reject" <?php echo $row['Status'] == 'Confirmed' ? 'disabled' : ''; ?> onclick="return confirmAction(this);">Reject</button>
-								<button class="btn btn-success" name="confirm" <?php echo $row['Status'] == 'Confirmed' ? 'disabled' : ''; ?> onclick="return confirmAction(this);">Confirm</button>
+								<button class="btn btn-warning" name="del" <?php echo $row['Status'] != 'Waiting for return confirmation' ? 'disabled' : ''; ?> onclick="return confirmReturn()">Confirm Return</button>
 							</form>
 						</td>
 					</tr>
@@ -316,14 +233,24 @@ if (isset($_POST['reject'])) {
 	</div>
 </div>
 
-
-
-
 <script>
-    function confirmAction(button) {
-        var action = button.name == 'reject' ? 'Reject' : 'Confirm';
-        return confirm('Are you sure you want to ' + action + ' this record?');
+function confirmAction(button) {
+    var message = '';
+
+    switch (button.name) {
+        case 'reject':
+            message = 'Reject transaction?';
+            break;
+        case 'confirm':
+            message = 'Approve transaction?';
+            break;
+        default:
+            message = 'Are you sure you want to perform this action?';
+            break;
     }
+
+    return confirm(message);
+}
 </script>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
