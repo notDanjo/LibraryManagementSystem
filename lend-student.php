@@ -13,45 +13,56 @@ if(isset($_POST['submit']))
     $bdate = trim($_POST['borrowDate']);
     $due = trim($_POST['dueDate']);
 
-    // Validation
+	// Validation
+<<<<<<< Updated upstream
+	if (empty($bid) || empty($bdate) || empty($due)) 
+	{
+		echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
+		return;
+	}
+// Validation
+// Validation
+    $bqry = mysqli_query($conn,"SELECT * FROM books where bookId = {$bid} ");
+    $bdata = mysqli_fetch_array($bqry);
+=======
     if (empty($bid) || $bid == 'SELECT BOOK' || empty($bdate) || empty($due)) {
         echo "<script>alert('All fields are required'); window.location.href='lend-student.php';</script>";
         return;
     }
-
-    // Fetch the book data from the database
-    $sql = "SELECT * FROM books WHERE bookId = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $bid);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $bdata = mysqli_fetch_assoc($result);
+>>>>>>> Stashed changes
 
     // Check if the book is available
     if ($bdata['bookCopies'] > 0) {
+		$sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId, Status) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid', 'Pending')";
+        $query_borrow = mysqli_query($conn, $sql_borrow);
+
+<<<<<<< Updated upstream
+        if($query_borrow){
+            // Retrieve the borrowId after inserting the borrow record
+            $borrowId = mysqli_insert_id($conn);
+=======
+	// Check if the book is available
+	if ($bdata['bookCopies'] > 0) {
 		$sql_borrow = "INSERT INTO borrow(memberName, matricNo, bookName, borrowDate, returnDate, bookId, Status) values('$name', '$number', '{$bdata['bookTitle']}', '$bdate', '$due', '$bid', 'Pending For Approval')";
 		$query_borrow = mysqli_query($conn, $sql_borrow);
-	
-		if ($query_borrow) {
-			// Get the last inserted id
-			$borrowId = mysqli_insert_id($conn);
-	
-			// Insert audit log for successful borrow
-			$auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";
-			$sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action, memberName, bookName) VALUES ('$borrowId', '$auditMessage', '$name', '{$bdata['bookTitle']}')";
-			mysqli_query($conn, $sql_audit);
-	
-			// Decrease the book count by 1
-			$newBookCount = $bdata['bookCopies'] - 1;
-			mysqli_query($conn, "UPDATE books SET bookCopies = {$newBookCount} WHERE bookId = {$bid}");
-	
-			echo "<script>alert('Record Added Successfully!');</script>";
-		} else {
-			echo "<script>alert('Unsuccessful');</script>";
-		}
-	} else {
-		echo "<script>alert('Book Not Available at the moment');</script>";
-	}
+>>>>>>> Stashed changes
+
+            // Insert audit log for successful borrow
+            $auditMessage = "Book borrowed: {$bdata['bookTitle']} by $name ($number)";
+            $sql_audit = "INSERT INTO audit_logs_borrow (borrowId, action, memberName, bookName) VALUES ('$borrowId', '$auditMessage', '$name', '{$bdata['bookTitle']}')";
+            mysqli_query($conn, $sql_audit);
+
+            // Decrease the book count by 1
+            $newBookCount = $bdata['bookCopies'] - 1;
+            mysqli_query($conn, "UPDATE books SET bookCopies = {$newBookCount} WHERE bookId = {$bid}");
+
+            echo "<script>alert('Record Added Successfully!');</script>";
+        } else {
+            echo "<script>alert('Unsuccessful');</script>";
+        }
+    } else {
+        echo "<script>alert('Book Not Available at the moment');</script>";
+    }
 }
 	
 ?>
@@ -88,13 +99,13 @@ if(isset($_POST['submit']))
 						</div>		
 					</div>
 					<div class="form-group">
-						<label for="Book Title" class="col-sm-2 control-label">STUDENT NAME</label>
+						<label for="Book Title" class="col-sm-2 control-label">MEMBER NAME</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="member" id="bookTitle" value="<?php echo $name; ?>">
 						</div>		
 					</div>
 					<div class="form-group">
-						<label for="Member Card ID" class="col-sm-2 control-label">STUDENT CODE</label>
+						<label for="Member Card ID" class="col-sm-2 control-label">MATRIC NO</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="matric" value="<?php echo $number; ?>">
 						</div>		

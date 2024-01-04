@@ -43,7 +43,6 @@ include "includes/header.php";
 					<div class="navbar-section">
 						<!-- Right navigation items go here -->
 						<ul class="nav navbar-nav navbar-right">
-								<li><a href="search.php">Available Books</a></li>
 							<li><a href="login.php">Login</a></li>
 							<li><a href="addstudent.php">Sign Up</a></li>
 						</ul>

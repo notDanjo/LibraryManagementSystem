@@ -60,7 +60,11 @@ if(isset($_POST['del'])){
 	<div class="alert alert-warning col-lg-7 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-0 col-sm-offset-1 col-xs-offset-0" style="margin-top:70px">
 
 		<span class="glyphicon glyphicon-book"></span>
+<<<<<<< Updated upstream
+	    <strong>Transaction</strong> Table
+=======
 	    <strong>Transactions</strong> Table
+>>>>>>> Stashed changes
 	</div>
 
 	</div>
@@ -85,13 +89,12 @@ if(isset($_POST['del'])){
 		          <thead>
 		               <tr> 
 		                  <th>ID</th>
-		                  <th>Student Name</th>
+		                  <th>Member Name</th>
 		                  <th>Student Code</th>
 		                  <th>Book Name</th>
 		                  <th>Borrow date</th>
 		                  <th>Return Date</th>
 		                  <th>Transaction Status</th>
-						  <th>Return</th>
 		                </tr>    
 		          </thead>  
 
@@ -110,22 +113,11 @@ if(isset($_POST['del'])){
 		             <td><?php echo $row['bookName']; ?></td>
 		             <td><?php echo $row['borrowDate']; ?></td>
 		             <td><?php echo $row['returnDate']; ?></td>
+<<<<<<< Updated upstream
+		             <td><?php echo $row['Status']; ?></td> <!-- Display the Status column -->
+=======
 		             <td><?php echo $row['Status']; ?></td>
-					 <td>
-					 <script>
-						function confirmReturn() {
-							var confirmation = confirm('Are you sure you want to return this book?');
-							return confirmation;
-						}
-					</script>
-
-					<!-- ... -->
-
-					<form action="return_book.php" method="post">
-						<input type="hidden" name="borrowId" value="<?php echo $row['borrowId']; ?>">
-						<input type="submit" value="Return" class="btn btn-warning" <?php echo ($row['Status'] == 'Pending For Approval' || $row['Status'] == 'Waiting for confirmation') ? 'disabled' : ''; ?> onclick="return confirmReturn()">
-					</form>
-						</td>
+>>>>>>> Stashed changes
 		            </tr> 
 		            <?php } ?> 
 		         </tbody> 
