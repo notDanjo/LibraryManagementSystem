@@ -98,15 +98,15 @@ if (isset($_POST['submit'])) {
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="Password" class="col-sm-2 control-label">Student Code</label>
+						<label for="Password" class="col-sm-2 control-label">STUDENT CODE</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="matric_no" placeholder="Student Code" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="Password" class="col-sm-2 control-label">DEPT</label>
+						<label for="Password" class="col-sm-2 control-label" >GRADE & SECTION</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="dept" placeholder="Department" id="Address" required>
+							<input type="text" class="form-control" name="dept" placeholder="EX. G7 Molave" id="Address" required>
 						</div>
 					</div>
 					<div class="form-group">
