@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 					<div class="form-group">
 						<label for="Password" class="col-sm-2 control-label">PASSWORD</label>
 						<div class="col-sm-10">
-							<input type="password" class="form-control" name="password" placeholder="password" id="password" required>
+							<input type="password" class="form-control" name="password" placeholder="Password" id="password" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 					<div class="form-group">
 						<label for="Password" class="col-sm-2 control-label">PHONE NUMBER</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="phone" placeholder="phone" id="password" required>
+							<input type="text" class="form-control" name="phone" placeholder="Phone Number" id="phone" required maxlength="11">
 						</div>
 					</div>
 
