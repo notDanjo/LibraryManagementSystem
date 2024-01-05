@@ -21,10 +21,10 @@
 					<div class="navbar-section">
 						<!-- Left navigation items go here -->
 						<ul class="nav navbar-nav">
-							<li class="active nav-item"><a href="index.php">Home</a></li>
+							<li class="active nav-item"><a href="studentportal.php">Home</a></li>
 							<li class="nav-item"><a href="profile.php">View Profile</a></li>
 							<li class="nav-item"><a href="borrow-student.php">Borrow Books</a></li>
-							<li class="nav-item"><a href="fine-student.php">Fines</a></li>
+							<li class="nav-item"><a href="fine-student.php">Transactions</a></li>
 						</ul>
 					</div>
 					<div class="navbar-header">
